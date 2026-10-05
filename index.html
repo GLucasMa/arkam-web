@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARKAM · Custom Guitar Picks</title>
+<meta name="description" content="Púas de acrílico personalizadas. Elegí modelo, espesor, colores, grabado y terminación.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b0c; --bg2:#121214; --panel:#17171a; --line:#2a2a2f; --line2:#3a3a40;
+    --fg:#f2f1ee; --muted:#9a9894; --dim:#6b6a67; --gold:#c9a96e;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);font-family:'Jost',system-ui,sans-serif;font-weight:300;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-size:12px;letter-spacing:.35em;text-transform:uppercase;color:var(--muted);font-weight:400}
+  h2{font-weight:400;letter-spacing:.28em;text-transform:uppercase;font-size:clamp(22px,3vw,30px)}
+  .serif{font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:0;text-transform:none}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:50;background:rgba(11,11,12,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand svg{width:34px;height:34px}
+  .brand span{letter-spacing:.45em;font-weight:400;font-size:15px}
+  .navlinks{display:flex;gap:30px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .navlinks a:hover{color:var(--fg)}
+  .cartbtn{display:flex;align-items:center;gap:8px;border:1px solid var(--line2);padding:8px 14px;border-radius:999px;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+  .cartbtn b{background:var(--fg);color:var(--bg);border-radius:999px;min-width:22px;height:22px;display:grid;place-items:center;font-size:12px;font-weight:600}
+
+  /* HERO */
+  .hero{position:relative;min-height:calc(100vh - 68px);display:grid;place-items:center;text-align:center;overflow:hidden;padding:60px 0}
+  .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 45%,#1d1d21 0%,transparent 70%)}
+  .hero .grain{position:absolute;inset:0;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .hero-inner{position:relative;z-index:1}
+  .hero-logo{width:min(220px,48vw);height:min(202px,44vw);margin:0 auto 18px;display:block}
+  .wordmark{font-size:clamp(30px,6vw,56px);letter-spacing:.6em;font-weight:300;margin-right:-.6em}
+  .hero p.lead{margin:22px auto 36px;max-width:520px;color:var(--muted);font-size:18px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 30px;border-radius:999px;font-size:13px;letter-spacing:.25em;text-transform:uppercase;font-weight:500;transition:.2s}
+  .btn.primary{background:var(--fg);color:var(--bg)}
+  .btn.primary:hover{background:#d9d8d4}
+  .btn.ghost{border:1px solid var(--line2)}
+  .btn.ghost:hover{border-color:var(--fg)}
+  .hero .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .float-pick{position:absolute;width:120px;opacity:.6;filter:drop-shadow(0 20px 30px rgba(0,0,0,.6));animation:float 9s ease-in-out infinite}
+  .float-pick.p1{left:8%;top:18%}
+  .float-pick.p2{right:9%;top:24%;width:104px;animation-delay:-3s}
+  .float-pick.p3{left:14%;bottom:12%;width:80px;animation-delay:-5s}
+  .float-pick.p4{right:15%;bottom:10%;width:120px;animation-delay:-7s}
+  @keyframes float{0%,100%{translate:0 0;rotate:-6deg}50%{translate:0 -16px;rotate:8deg}}
+
+  section{padding:110px 0;border-top:1px solid var(--line)}
+  .sec-head{text-align:center;margin-bottom:60px}
+  .sec-head h2{margin-top:12px}
+  .sec-head p{color:var(--muted);margin-top:14px;max-width:580px;margin-inline:auto}
+
+  /* MODELOS */
+  .shapes{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+  .shape-card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:30px 16px 24px;text-align:center;transition:.25s;cursor:pointer}
+  .shape-card:hover{border-color:var(--line2);transform:translateY(-4px)}
+  .shape-card svg{height:140px;width:auto;margin:0 auto 20px;display:block;filter:drop-shadow(0 14px 20px rgba(0,0,0,.5))}
+  .shape-card h3{font-weight:400;letter-spacing:.25em;text-transform:uppercase;font-size:15px}
+  .shape-card .mm{color:var(--gold);font-size:12px;letter-spacing:.1em;margin-top:6px}
+  .shape-card p{color:var(--muted);font-size:13px;margin-top:8px}
+
+  /* ESPESORES */
+  .thick{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .thick-card{border:1px solid var(--line);border-radius:var(--radius);padding:30px;background:var(--bg2)}
+  .thick-card .mm{font-size:46px;font-weight:300;letter-spacing:.04em}
+  .thick-card .mm small{font-size:18px;color:var(--muted);margin-left:4px}
+  .thick-card .bar{height:var(--h);background:linear-gradient(90deg,#fff,#8a8a8a);border-radius:2px;margin:14px 0 18px;opacity:.85}
+  .thick-card p{color:var(--muted);font-size:14px}
+  .swatches{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+  .sw{width:22px;height:22px;border-radius:50%;border:1px solid rgba(255,255,255,.25);position:relative;overflow:hidden}
+  .sw.tr::after,.color i.tr::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.18) 0 3px,transparent 3px 6px)}
+
+  /* GRABADOS */
+  .eng-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .eng-card{border:1px solid var(--line);border-radius:var(--radius);padding:26px;background:var(--bg2);display:flex;gap:20px;align-items:center}
+  .eng-card svg{width:84px;flex:none}
+  .eng-card h3{font-weight:400;letter-spacing:.2em;text-transform:uppercase;font-size:14px}
+  .eng-card p{color:var(--muted);font-size:13px;margin-top:6px}
+  .callout{margin-top:22px;border:1px solid var(--line);border-left:2px solid var(--gold);border-radius:10px;padding:16px 20px;color:var(--muted);font-size:14px;background:var(--bg2)}
+  .callout b{color:var(--fg);font-weight:500}
+
+  /* CONFIGURADOR */
+  #pedido{background:linear-gradient(180deg,var(--bg) 0%,#0e0e10 100%)}
+  .config{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:start}
+  .stage{position:sticky;top:96px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:30px;overflow:hidden}
+  .stage-view{aspect-ratio:1/1;display:grid;place-items:center;position:relative;background:radial-gradient(circle at 50% 40%,#26262b 0%,#141416 70%);border-radius:14px}
+  .stage-view .texture{position:absolute;inset:0;border-radius:14px;opacity:.25;background-image:radial-gradient(#000 1px,transparent 1.4px);background-size:6px 6px}
+  #preview{width:94%;height:auto;position:relative;filter:drop-shadow(0 30px 40px rgba(0,0,0,.65))}
+  .side-toggle{position:absolute;top:14px;right:14px;display:flex;border:1px solid var(--line2);border-radius:999px;overflow:hidden;font-size:11px;letter-spacing:.15em;text-transform:uppercase;z-index:2}
+  .side-toggle[hidden]{display:none}
+  .side-toggle button{padding:6px 12px;color:var(--muted)}
+  .side-toggle button.on{background:var(--fg);color:var(--bg)}
+  .dist{position:absolute;left:14px;bottom:14px;display:flex;gap:6px;flex-wrap:wrap;z-index:2}
+  .dist span{display:flex;align-items:center;gap:6px;background:rgba(0,0,0,.55);border:1px solid var(--line2);border-radius:999px;padding:4px 10px 4px 5px;font-size:12px}
+  .dist i{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.3)}
+  .spec{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 10px;margin-top:22px}
+  .spec div{border-top:1px solid var(--line);padding-top:10px}
+  .spec span{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  .spec b{font-weight:400;font-size:15px}
+
+  .steps{display:flex;flex-direction:column;gap:14px}
+  .step{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px}
+  .step-h{display:flex;align-items:baseline;gap:14px;margin-bottom:16px}
+  .step-h .n{font-size:12px;color:var(--dim);letter-spacing:.2em}
+  .step-h h4{font-weight:400;letter-spacing:.25em;text-transform:uppercase;font-size:14px}
+  .step-h .val{margin-left:auto;font-size:13px;color:var(--muted);text-align:right}
+  .opts{display:grid;gap:10px}
+  .opts.c2{grid-template-columns:repeat(2,1fr)}
+  .opts.c3{grid-template-columns:repeat(3,1fr)}
+  .opts.c4{grid-template-columns:repeat(4,1fr)}
+  .opts.c5{grid-template-columns:repeat(5,1fr)}
+  .opt{border:1px solid var(--line2);border-radius:10px;padding:12px 8px;text-align:center;transition:.15s;font-size:14px}
+  .opt:hover{border-color:#77767a}
+  .opt.on{border-color:var(--fg);background:rgba(255,255,255,.06)}
+  .opt svg{height:46px;width:auto;display:block;margin:2px auto 8px}
+  .opt small{display:block;color:var(--dim);font-size:11px;letter-spacing:.06em;margin-top:2px;line-height:1.3}
+  .opt small.req{color:var(--gold)}
+  .opt .big{font-size:22px;font-weight:300;display:block}
+  .colors{display:flex;flex-wrap:wrap;gap:12px 6px}
+  .color{display:flex;flex-direction:column;align-items:center;gap:6px;width:76px;font-size:11px;color:var(--muted);text-align:center;line-height:1.2}
+  .color i{width:38px;height:38px;border-radius:50%;border:2px solid transparent;outline:1px solid var(--line2);outline-offset:2px;transition:.15s;position:relative;overflow:hidden}
+  .color i::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.45),transparent 45%)}
+  .color.on i{outline:2px solid var(--fg)}
+  .color.on{color:var(--fg)}
+  .color .badge{position:absolute;inset:0;display:grid;place-items:center;font-weight:600;font-size:13px;color:#fff;text-shadow:0 1px 3px #000;z-index:1}
+  .limit{display:inline-block;font-size:12px;color:var(--gold);margin-bottom:12px}
+  .face{border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:12px}
+  .face h5{font-weight:400;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .face .opts{margin-bottom:12px}
+  .sub{display:grid;gap:12px}
+  label.f{display:grid;gap:6px;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim)}
+  input[type=text],textarea,select{background:var(--bg);border:1px solid var(--line2);border-radius:10px;padding:12px 14px;color:var(--fg);font:inherit;font-size:15px;letter-spacing:.02em;text-transform:none;width:100%}
+  input[type=text]:focus,textarea:focus,select:focus{outline:none;border-color:var(--fg)}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .drop{display:block;border:1px dashed var(--line2);border-radius:10px;padding:16px;text-align:center;font-size:13px;color:var(--muted);cursor:pointer}
+  .drop:hover{border-color:var(--fg)}
+  .note{font-size:12px;color:var(--dim);margin-top:10px}
+  .note a{text-decoration:underline}
+  .engcolors .color i.metal{background-image:linear-gradient(135deg,rgba(255,255,255,.7),rgba(255,255,255,0) 40%,rgba(0,0,0,.35) 75%,rgba(255,255,255,.3))!important}
+
+  .summary{background:var(--fg);color:var(--bg);border-radius:var(--radius);padding:20px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .summary .sumtxt{font-size:14px;line-height:1.4;flex:1;min-width:200px}
+  .summary .sumtxt b{display:block;font-size:20px;font-weight:500;letter-spacing:.04em}
+  .summary button{background:var(--bg);color:var(--fg);padding:14px 24px;border-radius:999px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:500}
+  .summary button:hover{background:#2a2a2e}
+
+  /* PROCESO */
+  .process{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  .process div{padding:30px 26px;border-right:1px solid var(--line)}
+  .process div:last-child{border-right:0}
+  .process .k{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:40px;color:var(--dim)}
+  .process h5{font-weight:400;letter-spacing:.2em;text-transform:uppercase;font-size:14px;margin:8px 0}
+  .process p{color:var(--muted);font-size:14px}
+
+  footer.site{border-top:1px solid var(--line);padding:60px 0 40px;text-align:center;color:var(--muted);font-size:14px}
+  footer.site svg{width:60px;height:56px;margin:0 auto 14px;display:block}
+  footer.site .wm{letter-spacing:.5em;color:var(--fg);margin-bottom:18px}
+  footer.site a{border-bottom:1px solid var(--line2);padding-bottom:2px}
+  footer.site a:hover{color:var(--fg);border-color:var(--fg)}
+  .disclaimer{margin-top:26px;font-size:12px;color:var(--dim)}
+
+  /* PEDIDO (drawer) */
+  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+  .drawer{position:fixed;top:0;right:0;height:100%;width:min(460px,100%);background:var(--bg2);border-left:1px solid var(--line);z-index:90;transform:translateX(100%);transition:.3s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column}
+  body.cart-open .scrim{opacity:1;pointer-events:auto}
+  body.cart-open .drawer{transform:none}
+  .drawer header{display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1px solid var(--line)}
+  .drawer header h3{font-weight:400;letter-spacing:.3em;text-transform:uppercase;font-size:15px}
+  .drawer .items{flex:1;overflow:auto;padding:12px 24px}
+  .item{display:grid;grid-template-columns:52px 1fr;gap:14px;align-items:start;padding:14px 0;border-bottom:1px solid var(--line)}
+  .item svg{width:48px;height:auto}
+  .item h6{font-weight:400;font-size:15px;letter-spacing:.06em}
+  .item p{font-size:12px;color:var(--muted);line-height:1.5}
+  .item .rm{font-size:11px;color:var(--dim);letter-spacing:.15em;text-transform:uppercase;margin-top:6px}
+  .item .rm:hover{color:var(--fg)}
+  .empty{color:var(--dim);text-align:center;padding:60px 0;font-size:14px}
+  .drawer .foot{border-top:1px solid var(--line);padding:18px 24px;display:grid;gap:12px}
+  .drawer .btn{width:100%}
+
+  /* MODAL de envío */
+  .modal{position:fixed;inset:0;z-index:120;display:none;place-items:center;background:rgba(0,0,0,.7);padding:16px}
+  .modal.show{display:grid}
+  .modal .box{background:var(--bg2);border:1px solid var(--line2);border-radius:18px;max-width:560px;width:100%;padding:26px;display:grid;gap:14px;max-height:90vh;overflow:auto}
+  .modal h3{font-weight:400;letter-spacing:.25em;text-transform:uppercase;font-size:15px}
+  .modal ol{padding-left:18px;color:var(--muted);font-size:14px;display:grid;gap:4px}
+  .modal textarea{font-size:13px;min-height:200px;font-family:ui-monospace,Consolas,monospace}
+  .modal .acts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+  .toast{position:fixed;left:50%;bottom:26px;translate:-50% 20px;background:var(--fg);color:var(--bg);padding:12px 22px;border-radius:999px;font-size:14px;opacity:0;transition:.3s;z-index:130;pointer-events:none}
+  .toast.show{opacity:1;translate:-50% 0}
+
+  @media (max-width:1060px){ .shapes{grid-template-columns:repeat(3,1fr)} }
+  @media (max-width:960px){
+    .navlinks{display:none}
+    .config{grid-template-columns:1fr}
+    .stage{position:relative;top:0}
+    .eng-grid{grid-template-columns:1fr}
+    .process{grid-template-columns:1fr 1fr}
+    .process div:nth-child(2){border-right:0}
+    .process div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  }
+  @media (max-width:640px){
+    .wrap{padding:0 16px}
+    .shapes{grid-template-columns:repeat(2,1fr)}
+    .thick{grid-template-columns:1fr}
+    .opts.c4{grid-template-columns:repeat(2,1fr)}
+    .opts.c5{grid-template-columns:repeat(3,1fr)}
+    .float-pick{display:none}
+    section{padding:80px 0}
+    .process{grid-template-columns:1fr}
+    .process div{border-right:0;border-bottom:1px solid var(--line)}
+    .spec{grid-template-columns:repeat(2,1fr)}
+    .row2,.modal .acts{grid-template-columns:1fr}
+    .stage{padding:16px}
+  }
+</style>
+</head>
+<body>
+
+<!-- Logo reutilizable (recreación vectorial del monograma) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="logo" viewBox="0 0 100 92">
+      <g fill="none" stroke="currentColor" stroke-linejoin="miter" stroke-miterlimit="10">
+        <path d="M10 76 V12 L50 54 L90 12 V76" stroke-width="5.5"/>
+        <path d="M17 32 V76" stroke-width="1.8"/>
+        <path d="M83 32 V76" stroke-width="1.8"/>
+        <path d="M32 88 V44 C32 28 40 16 50 8 C60 16 68 28 68 44 V88" stroke-width="5.5"/>
+        <path d="M39 88 V48" stroke-width="1.8"/>
+        <path d="M61 88 V48" stroke-width="1.8"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top"><svg><use href="#logo"/></svg><span>ARKAM</span></a>
+    <div class="navlinks">
+      <a href="#modelos">Modelos</a>
+      <a href="#espesores">Colores</a>
+      <a href="#grabados">Grabados</a>
+      <a href="#pedido">Armá tu pedido</a>
+    </div>
+    <button class="cartbtn" id="openCart">Pedido <b id="cartCount">0</b></button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="grain"></div>
+  <svg class="float-pick p1" viewBox="0 0 100 120" data-shape="arkam" data-t="2.0" data-c="0"></svg>
+  <svg class="float-pick p2" viewBox="0 0 100 120" data-shape="shuriken" data-t="3.0" data-c="0"></svg>
+  <svg class="float-pick p3" viewBox="0 0 100 120" data-shape="mini" data-t="2.4" data-c="1"></svg>
+  <svg class="float-pick p4" viewBox="0 0 100 120" data-shape="lp" data-t="2.4" data-c="3"></svg>
+  <div class="hero-inner wrap">
+    <svg class="hero-logo"><use href="#logo"/></svg>
+    <div class="wordmark">ARKAM</div>
+    <div class="eyebrow" style="margin-top:10px">Custom Guitar Picks · Argentina</div>
+    <p class="lead">Púas de acrílico personalizadas. Elegí modelo, espesor, colores, grabado y terminación, y mandanos tu pedido.</p>
+    <div class="btns">
+      <a class="btn primary" href="#pedido">Armá tu pedido</a>
+      <a class="btn ghost" href="#modelos">Ver modelos</a>
+    </div>
+  </div>
+</header>
+
+<section id="modelos">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">01 · Modelos</div>
+      <h2>Nuestras <span class="serif">púas</span></h2>
+      <p>Cinco siluetas. Tocá una para empezar tu pedido con ese modelo.</p>
+    </div>
+    <div class="shapes" id="shapeCards"></div>
+  </div>
+</section>
+
+<section id="espesores">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">02 · Espesores y colores</div>
+      <h2>Tres <span class="serif">calibres</span></h2>
+      <p>Cada espesor tiene su propia paleta. Con 4 púas elegís 1 color, con 6 u 8 hasta 2 colores y con 12 hasta 3.</p>
+    </div>
+    <div class="thick" id="thickCards"></div>
+  </div>
+</section>
+
+<section id="grabados">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">03 · Grabados</div>
+      <h2>Simple o doble <span class="serif">faz</span></h2>
+      <p>Logos, nombres y grips, uno por cada lado. Después elegís el color del grabado y la terminación.</p>
+    </div>
+    <div class="eng-grid" id="engCards"></div>
+    <div class="callout"><b>Importante:</b> cada pedido incluye un logo en las simple faz y dos logos en las doble faz. Si querés grabar más logos, se suma un adicional de <b>$3.000 por cada logo</b>, que se paga una sola vez: en los próximos pedidos ya no se cobra.</div>
+  </div>
+</section>
+
+<section id="pedido">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">04 · Pedido</div>
+      <h2>Armá tu <span class="serif">pedido</span></h2>
+      <p>Configurá cada pack, mirá la vista previa y sumalo al pedido. Podés combinar modelos (por ejemplo 6 Arkam y 6 Shuriken).</p>
+    </div>
+
+    <div class="config">
+      <div class="stage">
+        <div class="stage-view">
+          <div class="texture"></div>
+          <div class="side-toggle" id="sideToggle" hidden>
+            <button class="on" data-side="front">Frente</button>
+            <button data-side="back">Dorso</button>
+          </div>
+          <svg id="preview" viewBox="-42 -14 184 150"></svg>
+          <div class="dist" id="dist"></div>
+        </div>
+        <div class="spec">
+          <div><span>Modelo</span><b id="sShape">—</b></div>
+          <div><span>Espesor</span><b id="sThick">—</b></div>
+          <div><span>Cantidad</span><b id="sQty">—</b></div>
+          <div><span>Grabado</span><b id="sEng">—</b></div>
+          <div><span>Color grabado</span><b id="sEngColor">—</b></div>
+          <div><span>Terminación</span><b id="sFinish">—</b></div>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-h"><span class="n">01</span><h4>Cantidad</h4><span class="val" id="vQty"></span></div>
+          <div class="opts c4" id="optQty"></div>
+        </div>
+        <div class="step">
+          <div class="step-h"><span class="n">02</span><h4>Modelo</h4><span class="val" id="vShape"></span></div>
+          <div class="opts c5" id="optShape"></div>
+        </div>
+        <div class="step">
+          <div class="step-h"><span class="n">03</span><h4>Espesor</h4><span class="val" id="vThick"></span></div>
+          <div class="opts c3" id="optThick"></div>
+        </div>
+        <div class="step">
+          <div class="step-h"><span class="n">04</span><h4>Colores</h4><span class="val" id="vColor"></span></div>
+          <span class="limit" id="limitTxt"></span>
+          <div class="colors" id="optColor"></div>
+          <p class="note">Los colores disponibles dependen del espesor. Las púas se reparten en partes iguales entre los colores elegidos; si querés otra distribución, aclarala en observaciones.</p>
+        </div>
+        <div class="step">
+          <div class="step-h"><span class="n">05</span><h4>Grabado</h4><span class="val" id="vEng"></span></div>
+          <div class="opts c3" id="optEng"></div>
+          <div id="faces"></div>
+          <p class="note">Logos en PNG, PDF, SVG o EPS, en la mejor calidad posible y en blanco y negro. Si querés otra tipografía para tu nombre, buscala en <a href="https://www.dafont.com/es/" target="_blank" rel="noopener">dafont.com</a> y aclarala en observaciones.</p>
+        </div>
+        <div class="step" id="stepEngColor">
+          <div class="step-h"><span class="n">06</span><h4>Color del grabado</h4><span class="val" id="vEngColor"></span></div>
+          <div class="colors engcolors" id="optEngColor"></div>
+        </div>
+        <div class="step">
+          <div class="step-h"><span class="n">07</span><h4>Terminación</h4><span class="val" id="vFinish"></span></div>
+          <div class="opts c3" id="optFinish"></div>
+        </div>
+        <div class="step">
+          <div class="step-h"><span class="n">08</span><h4>Observaciones</h4></div>
+          <textarea id="notes" rows="2" placeholder="Ej: logo A de un lado y nombre del otro, 4 rojas y 2 negras…"></textarea>
+        </div>
+
+        <div class="summary">
+          <div class="sumtxt"><b id="sumTitle"></b><span id="sumSub"></span></div>
+          <button id="addBtn">Agregar al pedido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="proceso">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">05 · Cómo pedir</div>
+      <h2>De tu idea a tu <span class="serif">mano</span></h2>
+    </div>
+    <div class="process">
+      <div><div class="k">i.</div><h5>Configurás</h5><p>Armás uno o más packs: modelo, espesor, colores, grabado y terminación.</p></div>
+      <div><div class="k">ii.</div><h5>Nos escribís</h5><p>Enviás el resumen por Instagram junto con los archivos de tus logos.</p></div>
+      <div><div class="k">iii.</div><h5>Confirmamos</h5><p>Revisamos el diseño con vos y coordinamos el pago.</p></div>
+      <div><div class="k">iv.</div><h5>Fabricamos</h5><p>Cortamos, grabamos y terminamos cada púa de forma artesanal.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <svg><use href="#logo"/></svg>
+    <div class="wm">ARKAM</div>
+    <p>Custom Guitar Picks · Hecho en Argentina</p>
+    <p style="margin-top:14px"><a href="https://www.instagram.com/arkam_arg/" target="_blank" rel="noopener">@arkam_arg</a></p>
+    <p class="disclaimer">Vista previa de diseño · Las imágenes de las púas son ilustrativas.</p>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" aria-label="Pedido">
+  <header><h3>Tu pedido</h3><button id="closeCart" aria-label="Cerrar" style="font-size:22px">×</button></header>
+  <div class="items" id="items"></div>
+  <div class="foot">
+    <label class="f">Nombre y apellido o usuario de Instagram<input type="text" id="custName" placeholder="@tuusuario"></label>
+    <button class="btn primary" id="sendBtn">Enviar pedido por Instagram</button>
+  </div>
+</aside>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <h3>Último paso</h3>
+    <ol>
+      <li>Copiá el resumen de tu pedido.</li>
+      <li>Abrí el chat de <b>@arkam_arg</b> en Instagram y pegalo.</li>
+      <li>Adjuntá los archivos de tus logos (si elegiste grabar logos).</li>
+    </ol>
+    <textarea id="msg" readonly></textarea>
+    <div class="acts">
+      <button class="btn ghost" id="copyBtn">Copiar resumen</button>
+      <a class="btn primary" href="https://ig.me/m/arkam_arg" target="_blank" rel="noopener">Abrir Instagram</a>
+    </div>
+    <button class="note" id="closeModal" style="justify-self:center">Cerrar</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ====== DATOS (según el formulario de ARKAM) ====== */
+const IG_USER = 'arkam_arg';
+const ARKAM_D = 'M50 112 C47 112 45 110 43 107 L14 64 C10 58 8 52 8 46 C8 24 27 8 50 8 C73 8 92 24 92 46 C92 52 90 58 86 64 L57 107 C55 110 53 112 50 112Z';
+const SHAPES = {
+  arkam:{name:'Arkam', desc:'Nuestro diseño insignia: cabeza redonda y punta definida.', scale:.95, d:ARKAM_D},
+  shuriken:{name:'Shuriken', desc:'Triángulo de lados curvos. Tres puntas, tres ataques.', scale:.9, tri:true,
+      d:'M10 18 C5 18 3 22 4 27 Q13 68 45 101 C48 104 52 104 55 101 Q87 68 96 27 C97 22 95 18 90 18 Q50 12 10 18Z'},
+  lp:{name:'LP', desc:'Cuerpo amplio y lados redondeados.', scale:1,
+      d:'M50 112 C46 112 43 109 40 105 Q16 78 10 54 C5 30 20 10 50 10 C80 10 95 30 90 54 Q84 78 60 105 C57 109 54 112 50 112Z'},
+  mini:{name:'Mini', desc:'La Arkam en formato compacto.', scale:.8, d:ARKAM_D},
+  bass:{name:'Shuriken Bass', desc:'Shuriken de mayor tamaño, pensada para bajo.', scale:1, tri:true,
+      d:'M6 20 C1 20 -1 24 0 29 Q11 70 45 104 C48 107 52 107 55 104 Q89 70 100 29 C101 24 99 20 94 20 Q50 13 6 20Z',
+      thick:['3.0'], onRequest:['2.0','2.4']}
+};
+// [nombre, color, opacidad] — opacidad < .8 = traslúcido
+const TR = .58;
+const THICK = {
+  '2.0':{label:'2 mm', h:'4px', colors:[
+    ['Verde Flúor Traslúcido','#9dff1f',TR],['Naranja Flúor Traslúcido','#ff7a1a',TR],['Turquesa Traslúcido','#19c9c0',TR],
+    ['Negro','#141414',.97],['Blanco Hueso','#ece6d6',.96],['Beige','#d8c3a0',.96]]},
+  '2.4':{label:'2.4 mm', h:'6px', colors:[
+    ['Verde Flúor Traslúcido','#9dff1f',TR],['Rojo Traslúcido','#e0172b',TR],['Violeta Oscuro Traslúcido','#4b1f9f',.66],
+    ['Violeta Claro Traslúcido','#b08af5',TR],['Turquesa Traslúcido','#19c9c0',TR],['Negro','#141414',.97],
+    ['Blanco Hueso','#ece6d6',.96],['Rojo','#c8102e',.97],['Amarillo','#f5d000',.97],['Naranja','#f26a10',.97],
+    ['Azul','#1f4fd1',.97],['Rosa Intenso','#e8248c',.97],['Bordó','#6e0f1f',.97]]},
+  '3.0':{label:'3 mm', h:'9px', colors:[
+    ['Magenta Traslúcido','#e0158f',TR],['Verde Flúor Traslúcido','#9dff1f',TR],['Transparente','#eef3f6',.22],
+    ['Rojo','#c8102e',.97],['Blanco Opal','#f2efe9',.86]]}
+};
+const QTY = [4,6,8,12];
+const colorLimit = q => q<=4 ? 1 : q<=8 ? 2 : 3;
+const ENG = {none:'Sin grabado', simple:'Simple faz', double:'Doble faz'};
+const FACE_TYPES = {logo:'Logo', name:'Nombre', grip:'Grip'};
+const GRIPS = {hex:'Hexagonal / Panal', tire:'Llantas', claw:'Garras'};
+const ENG_COLORS = [
+  ['Negro','#111111'],['Blanco','#f7f7f7'],['Rojo','#d0161f'],['Amarillo','#f3cc00'],
+  ['Aluminio','#b9bdc3',1],['Dorado','#c9a24a',1],['Naranja Metalizado','#e07a2a',1],['Verde Metalizado','#3fa357',1],
+  ['Púrpura Metalizado','#8a4bd6',1],['Azul Claro Metalizado','#4fa6e0',1],['Sin pintar, solo grabado',null]
+];
+const FINISH = {
+  'Brillante':'Superficie pulida, con brillo espejado.',
+  'Mixto':'Combina zonas brillantes y mate.',
+  'Mate':'Acabado satinado, más agarre al tacto.'
+};
+
+const newFace = type => ({type, text:'', font:'Jost', grip:'hex', file:null, fileName:''});
+const state = {qty:6, shape:'arkam', thick:'2.4', colors:[0], eng:'simple',
+  faces:{front:newFace('logo'), back:newFace('grip')}, engColor:5, finish:'Brillante', side:'front'};
+let cart = [];
+try{ cart = JSON.parse(localStorage.getItem('arkam-cart')||'[]') }catch(e){}
+
+const $ = s => document.querySelector(s);
+const esc = t => String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const isDark = hex => {const n=parseInt(hex.slice(1),16);return ((n>>16)*.3+((n>>8)&255)*.59+(n&255)*.11)<90};
+let uid = 0;
+
+/* ====== RENDER DE UNA PÚA ======
+   o = {eng:'brand'|'logo'|'name'|'grip'|'none', text, font, grip, fileUrl, engColor:[name,hex,metal], finish} */
+function pickSVG(shape, hex, opacity, o={}){
+  const s = SHAPES[shape], id = 'p'+(uid++);
+  const sc = s.scale, tx = 50*(1-sc), ty = 60*(1-sc);
+  const cy = s.tri ? 42 : 52;                       // centro de la zona de grabado
+  const ec = o.engColor || ['Sin pintar', null];
+  const raw = !ec[1];
+  const darkPick = isDark(hex) && opacity>.8;
+  const ink = raw ? (darkPick ? 'rgba(255,255,255,.28)' : 'rgba(0,0,0,.22)')
+                  : (ec[2] ? `url(#${id}m)` : ec[1]);
+  const inkSolid = raw ? (darkPick ? 'rgba(255,255,255,.28)' : 'rgba(0,0,0,.22)') : ec[1];
+  let defs = '', eng = '';
+  if(ec[2]) defs += `<linearGradient id="${id}m" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset=".25" stop-color="${ec[1]}"/>
+      <stop offset=".6" stop-color="${ec[1]}"/><stop offset=".8" stop-color="#000" stop-opacity=".9"/><stop offset="1" stop-color="${ec[1]}"/></linearGradient>`;
+
+  if(o.eng==='brand' || (o.eng==='logo' && !o.fileUrl)){
+    eng = `<use href="#logo" x="31" y="${cy-18}" width="38" height="35" color="${inkSolid}" ${o.eng==='logo'?'opacity=".9"':''}/>`;
+  } else if(o.eng==='logo'){
+    defs += `<filter id="${id}f" color-interpolation-filters="sRGB">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -.33 -.33 -.33 0 1" result="a"/>
+      <feComposite in="a" in2="SourceAlpha" operator="in" result="b"/>
+      <feFlood flood-color="${inkSolid}"/><feComposite in2="b" operator="in"/></filter>`;
+    eng = `<image href="${o.fileUrl}" x="27" y="${cy-23}" width="46" height="46" preserveAspectRatio="xMidYMid meet" filter="url(#${id}f)"/>`;
+  } else if(o.eng==='name'){
+    const t = o.text || 'TU NOMBRE';
+    const fs = Math.max(6, Math.min(17, 118/Math.max(t.length,4)));
+    eng = `<text x="50" y="${cy}" text-anchor="middle" dominant-baseline="middle" font-family="${o.font||'Jost'}" font-size="${fs}" font-weight="600" letter-spacing="${o.font==='Jost'?1.2:0}" fill="${ink}" ${o.text?'':'opacity=".45"'}>${esc(t)}</text>`;
+  } else if(o.eng==='grip'){
+    const st = `stroke="${ink}" fill="none"`;
+    if(o.grip==='hex') defs += `<pattern id="${id}p" width="9" height="5.2" patternUnits="userSpaceOnUse"><path d="M0 2.6 L1.5 0 H4.5 L6 2.6 L4.5 5.2 H1.5Z M6 2.6 H9" ${st} stroke-width=".9"/></pattern>`;
+    if(o.grip==='tire') defs += `<pattern id="${id}p" width="8" height="6" patternUnits="userSpaceOnUse"><path d="M0 0 L4 3 L8 0 M0 3 L4 6 L8 3" ${st} stroke-width="1.5"/></pattern>`;
+    if(o.grip==='claw'){
+      eng = `<g fill="${ink}">${[-11,0,11].map(dx=>`<path transform="translate(${dx} 0) rotate(14 50 ${cy})" d="M50 ${cy-24} C53 ${cy-10} 53 ${cy+8} 49 ${cy+24} C50 ${cy+8} 49 ${cy-8} 50 ${cy-24}Z"/>`).join('')}</g>`;
+    } else {
+      eng = `<ellipse cx="50" cy="${cy}" rx="27" ry="${s.tri?22:25}" fill="url(#${id}p)"/>`;
+    }
+  }
+  const fin = o.finish || 'Brillante';
+  const gloss = fin==='Mate' ? .12 : .55;
+  return `
+  <defs>
+    <linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity="${gloss}"/>
+      <stop offset=".35" stop-color="#fff" stop-opacity=".05"/>
+      <stop offset=".7" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".35"/>
+    </linearGradient>
+    <clipPath id="${id}c"><path d="${s.d}"/></clipPath>
+    ${fin!=='Brillante' ? `<filter id="${id}n"><feTurbulence baseFrequency="1.4" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .5 -.1"/></filter>`:''}
+    ${defs}
+  </defs>
+  <g transform="translate(${tx} ${ty}) scale(${sc})">
+    <path d="${s.d}" fill="${hex}" fill-opacity="${opacity}"/>
+    <g clip-path="url(#${id}c)">
+      <path d="${s.d}" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="9"/>
+      <path d="${s.d}" fill="none" stroke="${hex}" stroke-opacity="${Math.min(1,opacity+.3)}" stroke-width="5"/>
+      ${fin!=='Brillante' ? `<rect ${fin==='Mixto'?'y="60" height="60"':'height="120"'} width="100" filter="url(#${id}n)" opacity=".35"/>`:''}
+      <rect width="100" height="120" fill="url(#${id}g)"/>
+      ${eng}
+    </g>
+    <path d="${s.d}" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width=".8"/>
+  </g>`;
+}
+
+/* ====== SECCIONES INFORMATIVAS ====== */
+document.querySelectorAll('.float-pick').forEach(el=>{
+  const c = THICK[el.dataset.t].colors[+el.dataset.c];
+  el.innerHTML = pickSVG(el.dataset.shape, c[1], c[2], {eng:'brand', engColor:['Sin pintar',null]});
+});
+const showcase = {arkam:['2.4',5], shuriken:['2.0',0], lp:['3.0',2], mini:['2.4',1], bass:['2.4',2]};
+$('#shapeCards').innerHTML = Object.entries(SHAPES).map(([k,s])=>{
+  const c = THICK[showcase[k][0]].colors[showcase[k][1]];
+  return `<div class="shape-card" data-shape="${k}">
+    <svg viewBox="0 0 100 120">${pickSVG(k, c[1], c[2], {eng:'brand', engColor:ENG_COLORS[5]})}</svg>
+    <h3>${s.name}</h3>
+    <div class="mm">${s.thick ? '3 mm · 2 y 2.4 mm a pedido' : '2 · 2.4 · 3 mm'}</div>
+    <p>${s.desc}</p>
+  </div>`}).join('');
+document.querySelectorAll('.shape-card').forEach(c=>c.onclick=()=>{setShape(c.dataset.shape);render();$('#pedido').scrollIntoView()});
+
+const thickDesc = {'2.0':'Ágil y flexible al ataque.', '2.4':'El equilibrio: definición sin perder velocidad. La paleta más amplia.', '3.0':'Máximo ataque y cuerpo.'};
+$('#thickCards').innerHTML = Object.entries(THICK).map(([k,t])=>`
+  <div class="thick-card">
+    <div class="mm">${t.label.replace(' mm','')}<small>mm</small></div>
+    <div class="bar" style="--h:${t.h}"></div>
+    <p>${thickDesc[k]} ${t.colors.length} colores.</p>
+    <div class="swatches">${t.colors.map(c=>`<span class="sw ${c[2]<.8?'tr':''}" title="${c[0]}" style="background:${c[1]}"></span>`).join('')}</div>
+  </div>`).join('');
+
+const engDemo = [
+  ['Logo', 'Subí tu logo en blanco y negro. Lo grabamos con el color que elijas.', {eng:'brand', engColor:ENG_COLORS[5]}, ['2.4',5]],
+  ['Nombre', 'Tu nombre o el de tu banda, con la tipografía que quieras.', {eng:'name', text:'ARKAM', engColor:ENG_COLORS[1]}, ['2.4',2]],
+  ['Grip', 'Hexagonal / panal, llantas o garras. Más agarre, cero resbalones.', {eng:'grip', grip:'hex', engColor:ENG_COLORS[0]}, ['2.0',0]]
+];
+$('#engCards').innerHTML = engDemo.map(([t,p,o,[th,ci]])=>{
+  const c = THICK[th].colors[ci];
+  return `<div class="eng-card"><svg viewBox="0 0 100 120">${pickSVG('arkam',c[1],c[2],o)}</svg><div><h3>${t}</h3><p>${p}</p></div></div>`}).join('');
+
+/* ====== CONFIGURADOR ====== */
+function opts(container, items, isOn, onPick, html){
+  const el = $(container);
+  el.innerHTML = items.map(([v,label])=>`<button class="opt ${isOn(v)?'on':''}" data-v="${v}">${html?html(v,label):label}</button>`).join('');
+  el.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{onPick(b.dataset.v);render()});
+}
+function setShape(k){
+  state.shape = k;
+  const s = SHAPES[k];
+  if(s.thick && !s.thick.includes(state.thick)){ state.thick = s.thick[0]; state.colors=[0]; }
+}
+const onReq = v => (SHAPES[state.shape].onRequest||[]).includes(v);
+function colorDist(){
+  const n = state.colors.length, base = Math.floor(state.qty/n), rem = state.qty % n;
+  return state.colors.map((ci,i)=>[THICK[state.thick].colors[ci], base + (i<rem?1:0)]);
+}
+function faceOpts(side){
+  const f = state.faces[side];
+  return {eng: state.eng==='none' ? 'none' : f.type, text:f.text, font:f.font, grip:f.grip, fileUrl:f.file,
+          engColor:ENG_COLORS[state.engColor], finish:state.finish};
+}
+function faceDesc(f){
+  if(f.type==='logo') return 'logo' + (f.fileName ? ` (${f.fileName})` : '');
+  if(f.type==='name') return `nombre "${f.text}" (${({'Jost':'Moderna','Cormorant Garamond':'Clásica','UnifrakturCook':'Gótica'})[f.font]})`;
+  return 'grip ' + GRIPS[f.grip];
+}
+
+function renderFaces(){
+  const sides = state.eng==='none' ? [] : state.eng==='simple' ? ['front'] : ['front','back'];
+  $('#faces').innerHTML = sides.map(side=>{
+    const f = state.faces[side];
+    return `<div class="face" data-side="${side}">
+      <h5>${state.eng==='simple' ? 'Qué grabamos' : side==='front' ? 'Lado A · Frente' : 'Lado B · Dorso'}</h5>
+      <div class="opts c3">${Object.entries(FACE_TYPES).map(([k,l])=>`<button class="opt ${f.type===k?'on':''}" data-type="${k}">${l}</button>`).join('')}</div>
+      <div class="sub">
+      ${f.type==='logo' ? `<label class="drop">${f.fileName ? '✓ '+esc(f.fileName)+' · tocá para cambiar' : 'Subí tu logo (PNG, PDF, SVG o EPS)'}<input type="file" accept=".png,.jpg,.jpeg,.svg,.pdf,.eps,image/*" hidden></label>` : ''}
+      ${f.type==='name' ? `<div class="row2"><label class="f">Texto<input type="text" maxlength="16" value="${esc(f.text)}" placeholder="Tu nombre"></label>
+         <label class="f">Tipografía<select>${[['Jost','Moderna'],['Cormorant Garamond','Clásica'],['UnifrakturCook','Gótica']].map(([v,l])=>`<option value="${v}" ${f.font===v?'selected':''}>${l}</option>`).join('')}</select></label></div>` : ''}
+      ${f.type==='grip' ? `<div class="opts c3">${Object.entries(GRIPS).map(([k,l])=>`<button class="opt ${f.grip===k?'on':''}" data-grip="${k}">${l}</button>`).join('')}</div>` : ''}
+      </div></div>`;
+  }).join('');
+  $('#faces').querySelectorAll('.face').forEach(el=>{
+    const side = el.dataset.side, f = state.faces[side];
+    const focus = () => { state.side = side; };
+    el.querySelectorAll('[data-type]').forEach(b=>b.onclick=()=>{f.type=b.dataset.type;focus();render()});
+    el.querySelectorAll('[data-grip]').forEach(b=>b.onclick=()=>{f.grip=b.dataset.grip;focus();render()});
+    const inp = el.querySelector('input[type=text]');
+    if(inp) inp.oninput = ()=>{f.text=inp.value;focus();renderPreview();renderSummary()};
+    const sel = el.querySelector('select');
+    if(sel) sel.onchange = ()=>{f.font=sel.value;focus();render()};
+    const file = el.querySelector('input[type=file]');
+    if(file) file.onchange = e=>{
+      const x = e.target.files[0]; if(!x) return;
+      f.file = /\.(png|jpe?g|svg|gif|webp)$/i.test(x.name) ? URL.createObjectURL(x) : null;
+      f.fileName = x.name; focus(); render();
+    };
+  });
+}
+
+function renderPreview(){
+  if(state.eng!=='double') state.side='front';
+  $('#sideToggle').hidden = state.eng!=='double';
+  document.querySelectorAll('#sideToggle button').forEach(b=>b.classList.toggle('on',b.dataset.side===state.side));
+  const dist = colorDist(), o = faceOpts(state.side), n = dist.length;
+  const layout = n===1 ? [[0,0]] : n===2 ? [[-10,-12],[12,14]] : [[0,0],[-16,-24],[16,24]];
+  // dibujar de atrás hacia adelante: el primer color queda adelante
+  const order = dist.map((d,i)=>[d,layout[i]]).reverse();
+  $('#preview').innerHTML = order.map(([[c],[ang,dx]])=>
+    `<g transform="translate(${dx} 0) rotate(${ang} 50 112)">${pickSVG(state.shape,c[1],c[2],o)}</g>`).join('');
+  $('#dist').innerHTML = dist.map(([c,q])=>`<span><i style="background:${c[1]}"></i>${q} × ${c[0]}</span>`).join('');
+}
+
+function renderSummary(){
+  const s = SHAPES[state.shape], t = THICK[state.thick];
+  $('#sumTitle').textContent = `${state.qty} × ${s.name} ${t.label}`;
+  $('#sumSub').textContent = colorDist().map(([c,q])=>`${q} ${c[0]}`).join(' · ');
+}
+
+function render(){
+  const t = THICK[state.thick], s = SHAPES[state.shape], lim = colorLimit(state.qty);
+  if(state.colors.length > lim) state.colors = state.colors.slice(0, lim);
+
+  opts('#optQty', QTY.map(q=>[q,q]), v=>+v===state.qty, v=>state.qty=+v,
+    v=>`<span class="big">${v}</span><small>${colorLimit(+v)===1?'1 color':'hasta '+colorLimit(+v)+' colores'}</small>`);
+  opts('#optShape', Object.entries(SHAPES).map(([k,s])=>[k,s.name]), v=>v===state.shape, setShape,
+    (v,l)=>`<svg viewBox="0 0 100 120">${pickSVG(v,'#e9eef2',.4)}</svg>${l}`);
+  opts('#optThick', Object.entries(THICK).map(([k,t])=>[k,t.label]), v=>v===state.thick, v=>{state.thick=v;state.colors=[0]},
+    (v,l)=>`<span class="big">${l}</span><small ${onReq(v)?'class="req"':''}>${onReq(v)?'A pedido':THICK[v].colors.length+' colores'}</small>`);
+  opts('#optEng', Object.entries(ENG), v=>v===state.eng, v=>{state.eng=v; if(v!=='double') state.side='front'},
+    (v,l)=>`${l}<small>${{none:'Púa lisa',simple:'Un lado',double:'Ambos lados'}[v]}</small>`);
+  opts('#optFinish', Object.entries(FINISH).map(([k])=>[k,k]), v=>v===state.finish, v=>state.finish=v,
+    (v,l)=>`${l}<small>${FINISH[v]}</small>`);
+
+  $('#limitTxt').textContent = lim===1 ? 'Con 4 púas elegís 1 color' : `Con ${state.qty} púas podés elegir hasta ${lim} colores (${state.colors.length}/${lim})`;
+  $('#optColor').innerHTML = t.colors.map((c,i)=>{
+    const pos = state.colors.indexOf(i);
+    return `<button class="color ${pos>-1?'on':''}" data-i="${i}"><i class="${c[2]<.8?'tr':''}" style="background:${c[1]}">${pos>-1&&lim>1?`<span class="badge">${pos+1}</span>`:''}</i>${c[0]}</button>`}).join('');
+  $('#optColor').querySelectorAll('.color').forEach(b=>b.onclick=()=>{
+    const i = +b.dataset.i, pos = state.colors.indexOf(i);
+    if(pos>-1){ if(state.colors.length>1) state.colors.splice(pos,1); }
+    else if(lim===1) state.colors=[i];
+    else if(state.colors.length<lim) state.colors.push(i);
+    else { state.colors[lim-1]=i; toast(`Máximo ${lim} colores para ${state.qty} púas`); }
+    render();
+  });
+
+  $('#stepEngColor').style.display = state.eng==='none' ? 'none' : '';
+  $('#optEngColor').innerHTML = ENG_COLORS.map(([n,h,m],i)=>`<button class="color ${i===state.engColor?'on':''}" data-i="${i}"><i class="${m?'metal':''}" style="background:${h||'repeating-linear-gradient(45deg,#3a3a40 0 4px,#222226 4px 8px)'}"></i>${n}</button>`).join('');
+  $('#optEngColor').querySelectorAll('.color').forEach(b=>b.onclick=()=>{state.engColor=+b.dataset.i;render()});
+
+  renderFaces(); renderPreview(); renderSummary();
+
+  const engTxt = state.eng==='none' ? 'Sin grabado' : ENG[state.eng];
+  $('#sShape').textContent = $('#vShape').textContent = s.name;
+  $('#sThick').textContent = t.label + (onReq(state.thick)?' (a pedido)':'');
+  $('#vThick').textContent = t.label;
+  $('#sQty').textContent = $('#vQty').textContent = state.qty + ' púas';
+  $('#vColor').textContent = state.colors.length + (state.colors.length>1?' colores':' color');
+  $('#sEng').textContent = $('#vEng').textContent = engTxt;
+  $('#sEngColor').textContent = $('#vEngColor').textContent = state.eng==='none' ? '—' : ENG_COLORS[state.engColor][0];
+  $('#sFinish').textContent = $('#vFinish').textContent = state.finish;
+}
+document.querySelectorAll('#sideToggle button').forEach(b=>b.onclick=()=>{state.side=b.dataset.side;renderPreview()});
+
+/* ====== PEDIDO ====== */
+function saveCart(){ try{localStorage.setItem('arkam-cart', JSON.stringify(cart))}catch(e){} drawCart(); }
+$('#addBtn').onclick = ()=>{
+  const sides = state.eng==='none' ? [] : state.eng==='simple' ? ['front'] : ['front','back'];
+  for(const sd of sides){
+    const f = state.faces[sd];
+    if(f.type==='name' && !f.text.trim()){ toast('Escribí el nombre a grabar'); return; }
+  }
+  const c0 = THICK[state.thick].colors[state.colors[0]];
+  cart.push({
+    qty:state.qty, shape:state.shape, thick:state.thick, onReq:onReq(state.thick),
+    colors: colorDist().map(([c,q])=>[c[0],q]), hex:c0[1], op:c0[2],
+    eng:state.eng, faces: sides.map(sd=>faceDesc(state.faces[sd])),
+    logos: sides.filter(sd=>state.faces[sd].type==='logo').length,
+    engColor: state.eng==='none' ? '' : ENG_COLORS[state.engColor][0],
+    finish:state.finish, notes:$('#notes').value.trim()
+  });
+  $('#notes').value='';
+  saveCart(); toast('Pack agregado al pedido');
+};
+function itemLines(it){
+  const L = [];
+  L.push(`Colores: ${it.colors.map(([n,q])=>`${q} ${n}`).join(', ')}`);
+  if(it.eng==='none') L.push('Sin grabado');
+  else {
+    L.push(`Grabado ${ENG[it.eng].toLowerCase()}: ${it.faces.map((f,i)=>it.faces.length>1?(i?'lado B ':'lado A ')+f:f).join(' / ')}`);
+    L.push(`Color del grabado: ${it.engColor}`);
+  }
+  L.push(`Terminación: ${it.finish}`);
+  if(it.notes) L.push(`Obs: ${it.notes}`);
+  return L;
+}
+function drawCart(){
+  $('#cartCount').textContent = cart.length;
+  $('#items').innerHTML = cart.length ? cart.map((it,i)=>`
+    <div class="item">
+      <svg viewBox="0 0 100 120">${pickSVG(it.shape,it.hex,it.op,{eng:'none',finish:it.finish})}</svg>
+      <div><h6>${it.qty} × ${SHAPES[it.shape].name} · ${THICK[it.thick].label}${it.onReq?' (a pedido)':''}</h6>
+      <p>${itemLines(it).map(esc).join('<br>')}</p><button class="rm" data-i="${i}">Quitar</button></div>
+    </div>`).join('') : '<div class="empty">Todavía no agregaste packs.</div>';
+  $('#items').querySelectorAll('.rm').forEach(b=>b.onclick=()=>{cart.splice(+b.dataset.i,1);saveCart()});
+}
+$('#sendBtn').onclick = ()=>{
+  if(!cart.length){ toast('Tu pedido está vacío'); return; }
+  const name = $('#custName').value.trim();
+  if(!name){ toast('Escribí tu nombre o usuario de Instagram'); $('#custName').focus(); return; }
+  const total = cart.reduce((a,b)=>a+b.qty,0);
+  const logos = cart.reduce((a,b)=>a+b.logos,0);
+  const blocks = cart.map((it,i)=>`${i+1}) ${it.qty} × ${SHAPES[it.shape].name} ${THICK[it.thick].label}${it.onReq?' (a pedido)':''}\n   - ${itemLines(it).join('\n   - ')}`);
+  const msg = `¡Hola ARKAM! Quiero hacer este pedido:\n\nNombre / IG: ${name}\nTotal: ${total} púas\n\n${blocks.join('\n\n')}`
+    + (logos ? `\n\nTe adjunto ${logos===1?'el archivo del logo':'los archivos de los logos'} por acá.` : '');
+  $('#msg').value = msg;
+  $('#modal').classList.add('show');
+};
+$('#copyBtn').onclick = async ()=>{
+  try{ await navigator.clipboard.writeText($('#msg').value); }
+  catch(e){ $('#msg').select(); document.execCommand('copy'); }
+  toast('Resumen copiado');
+};
+$('#closeModal').onclick = ()=>$('#modal').classList.remove('show');
+$('#modal').onclick = e=>{ if(e.target.id==='modal') $('#modal').classList.remove('show') };
+const openCart = ()=>document.body.classList.add('cart-open');
+const closeCart = ()=>document.body.classList.remove('cart-open');
+$('#openCart').onclick = openCart; $('#closeCart').onclick = closeCart; $('#scrim').onclick = closeCart;
+let tt; function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2200)}
+
+// descartar pedidos guardados con un formato anterior
+cart = cart.filter(it=>Array.isArray(it.colors) && SHAPES[it.shape] && THICK[it.thick]);
+render(); drawCart();
+</script>
+</body>
+</html>
