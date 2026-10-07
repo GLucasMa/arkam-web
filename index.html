@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ARKAM · Custom Guitar Picks</title>
-<meta name="description" content="Púas de acrílico personalizadas. Elegí modelo, espesor, colores, grabado y terminación.">
+<meta name="description" content="Púas de acrílico personalizadas. Armá tu pack combinando modelos, espesores, colores, grabados y terminaciones.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#0b0b0c; --bg2:#121214; --panel:#17171a; --line:#2a2a2f; --line2:#3a3a40;
-    --fg:#f2f1ee; --muted:#9a9894; --dim:#6b6a67; --gold:#c9a96e;
+    --fg:#f2f1ee; --muted:#9a9894; --dim:#6b6a67; --gold:#c9a96e; --bad:#e0645a;
     --radius:14px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -19,6 +19,7 @@
   body{background:var(--bg);color:var(--fg);font-family:'Jost',system-ui,sans-serif;font-weight:300;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   a{color:inherit;text-decoration:none}
   button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  button:disabled{opacity:.35;cursor:not-allowed}
   .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
   .eyebrow{font-size:12px;letter-spacing:.35em;text-transform:uppercase;color:var(--muted);font-weight:400}
   h2{font-weight:400;letter-spacing:.28em;text-transform:uppercase;font-size:clamp(22px,3vw,30px)}
@@ -33,7 +34,7 @@
   .navlinks{display:flex;gap:30px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
   .navlinks a:hover{color:var(--fg)}
   .cartbtn{display:flex;align-items:center;gap:8px;border:1px solid var(--line2);padding:8px 14px;border-radius:999px;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
-  .cartbtn b{background:var(--fg);color:var(--bg);border-radius:999px;min-width:22px;height:22px;display:grid;place-items:center;font-size:12px;font-weight:600}
+  .cartbtn b{background:var(--fg);color:var(--bg);border-radius:999px;padding:0 8px;height:22px;display:grid;place-items:center;font-size:12px;font-weight:600}
 
   /* HERO */
   .hero{position:relative;min-height:calc(100vh - 68px);display:grid;place-items:center;text-align:center;overflow:hidden;padding:60px 0}
@@ -59,7 +60,7 @@
   section{padding:110px 0;border-top:1px solid var(--line)}
   .sec-head{text-align:center;margin-bottom:60px}
   .sec-head h2{margin-top:12px}
-  .sec-head p{color:var(--muted);margin-top:14px;max-width:580px;margin-inline:auto}
+  .sec-head p{color:var(--muted);margin-top:14px;max-width:600px;margin-inline:auto}
 
   /* MODELOS */
   .shapes{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
@@ -92,22 +93,38 @@
 
   /* CONFIGURADOR */
   #pedido{background:linear-gradient(180deg,var(--bg) 0%,#0e0e10 100%)}
-  .config{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:start}
-  .stage{position:sticky;top:96px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:30px;overflow:hidden}
-  .stage-view{aspect-ratio:1/1;display:grid;place-items:center;position:relative;background:radial-gradient(circle at 50% 40%,#26262b 0%,#141416 70%);border-radius:14px}
+  .config{display:grid;grid-template-columns:1fr 1.05fr;gap:40px;align-items:start}
+  .stage{position:sticky;top:90px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px;overflow:hidden}
+  .stage-view{aspect-ratio:5/4;display:grid;place-items:center;position:relative;background:radial-gradient(circle at 50% 40%,#26262b 0%,#141416 70%);border-radius:14px}
   .stage-view .texture{position:absolute;inset:0;border-radius:14px;opacity:.25;background-image:radial-gradient(#000 1px,transparent 1.4px);background-size:6px 6px}
-  #preview{width:94%;height:auto;position:relative;filter:drop-shadow(0 30px 40px rgba(0,0,0,.65))}
-  .side-toggle{position:absolute;top:14px;right:14px;display:flex;border:1px solid var(--line2);border-radius:999px;overflow:hidden;font-size:11px;letter-spacing:.15em;text-transform:uppercase;z-index:2}
+  #preview{width:80%;height:auto;position:relative;filter:drop-shadow(0 30px 40px rgba(0,0,0,.65))}
+  .stage-label{position:absolute;top:14px;left:14px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);z-index:2}
+  .side-toggle{position:absolute;top:10px;right:12px;display:flex;border:1px solid var(--line2);border-radius:999px;overflow:hidden;font-size:11px;letter-spacing:.15em;text-transform:uppercase;z-index:2}
   .side-toggle[hidden]{display:none}
   .side-toggle button{padding:6px 12px;color:var(--muted)}
   .side-toggle button.on{background:var(--fg);color:var(--bg)}
-  .dist{position:absolute;left:14px;bottom:14px;display:flex;gap:6px;flex-wrap:wrap;z-index:2}
-  .dist span{display:flex;align-items:center;gap:6px;background:rgba(0,0,0,.55);border:1px solid var(--line2);border-radius:999px;padding:4px 10px 4px 5px;font-size:12px}
+  .dist{position:absolute;left:12px;bottom:12px;right:12px;display:flex;gap:6px;flex-wrap:wrap;z-index:2}
+  .dist span{display:flex;align-items:center;gap:6px;background:rgba(0,0,0,.55);border:1px solid var(--line2);border-radius:999px;padding:3px 10px 3px 4px;font-size:12px}
   .dist i{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.3)}
-  .spec{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 10px;margin-top:22px}
-  .spec div{border-top:1px solid var(--line);padding-top:10px}
-  .spec span{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
-  .spec b{font-weight:400;font-size:15px}
+
+  .pack-h{display:flex;justify-content:space-between;align-items:baseline;margin:20px 0 10px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  .pack-h b{font-weight:400;color:var(--fg);letter-spacing:.05em;font-size:14px;text-transform:none}
+  .strip{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+  .strip.n4{grid-template-columns:repeat(4,1fr)}
+  .strip.n8{grid-template-columns:repeat(8,1fr)}
+  .slot{aspect-ratio:5/6;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;background:var(--bg2);position:relative;transition:.15s}
+  .slot svg{width:78%;height:auto;filter:drop-shadow(0 4px 6px rgba(0,0,0,.5))}
+  .slot.empty{border-style:dashed;color:var(--dim);font-size:18px}
+  .slot.active{border-color:var(--fg)}
+  .slot.over{border-color:var(--bad)}
+  .slot small{position:absolute;bottom:2px;right:5px;font-size:9px;color:var(--dim)}
+  .meters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+  .meter{border-top:1px solid var(--line);padding-top:8px}
+  .meter span{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  .meter b{font-weight:400;font-size:15px}
+  .meter b.bad{color:var(--bad)}
+  .meter .bar{height:3px;background:var(--line);border-radius:2px;margin-top:6px;overflow:hidden}
+  .meter .bar i{display:block;height:100%;background:var(--fg);transition:width .25s}
 
   .steps{display:flex;flex-direction:column;gap:14px}
   .step{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px}
@@ -115,45 +132,74 @@
   .step-h .n{font-size:12px;color:var(--dim);letter-spacing:.2em}
   .step-h h4{font-weight:400;letter-spacing:.25em;text-transform:uppercase;font-size:14px}
   .step-h .val{margin-left:auto;font-size:13px;color:var(--muted);text-align:right}
-  .opts{display:grid;gap:10px}
+  .opts{display:grid;gap:8px}
   .opts.c2{grid-template-columns:repeat(2,1fr)}
   .opts.c3{grid-template-columns:repeat(3,1fr)}
   .opts.c4{grid-template-columns:repeat(4,1fr)}
   .opts.c5{grid-template-columns:repeat(5,1fr)}
-  .opt{border:1px solid var(--line2);border-radius:10px;padding:12px 8px;text-align:center;transition:.15s;font-size:14px}
+  .opt{border:1px solid var(--line2);border-radius:10px;padding:10px 6px;text-align:center;transition:.15s;font-size:14px}
   .opt:hover{border-color:#77767a}
   .opt.on{border-color:var(--fg);background:rgba(255,255,255,.06)}
-  .opt svg{height:46px;width:auto;display:block;margin:2px auto 8px}
-  .opt small{display:block;color:var(--dim);font-size:11px;letter-spacing:.06em;margin-top:2px;line-height:1.3}
+  .opt svg{height:40px;width:auto;display:block;margin:2px auto 6px}
+  .opt small{display:block;color:var(--dim);font-size:11px;letter-spacing:.04em;margin-top:2px;line-height:1.3}
   .opt small.req{color:var(--gold)}
   .opt .big{font-size:22px;font-weight:300;display:block}
-  .colors{display:flex;flex-wrap:wrap;gap:12px 6px}
-  .color{display:flex;flex-direction:column;align-items:center;gap:6px;width:76px;font-size:11px;color:var(--muted);text-align:center;line-height:1.2}
-  .color i{width:38px;height:38px;border-radius:50%;border:2px solid transparent;outline:1px solid var(--line2);outline-offset:2px;transition:.15s;position:relative;overflow:hidden}
+  .note{font-size:12px;color:var(--dim);margin-top:10px}
+  .note a{text-decoration:underline}
+
+  /* GRUPOS */
+  .group{border:1px solid var(--line);border-radius:12px;background:var(--bg2);margin-bottom:10px;overflow:hidden;transition:border-color .15s}
+  .group.on{border-color:var(--line2);background:#141417}
+  .g-head{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:12px 14px;cursor:pointer;width:100%;text-align:left}
+  .g-head svg{width:40px;height:44px}
+  .g-head .t{font-size:15px;font-weight:400}
+  .g-head .t em{font-style:normal;color:var(--dim);font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-right:8px}
+  .g-head .s{font-size:12px;color:var(--muted);line-height:1.4}
+  .g-head .acts{display:flex;gap:6px}
+  .g-head .acts button{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line2);border-radius:999px;padding:5px 10px}
+  .g-head .acts button:hover{color:var(--fg);border-color:var(--fg)}
+  .g-body{padding:4px 14px 16px;border-top:1px solid var(--line)}
+  .sub-h{display:flex;justify-content:space-between;align-items:baseline;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px}
+  .sub-h span{letter-spacing:.04em;text-transform:none;color:var(--dim);font-size:12px}
+  .addgroup{width:100%;border:1px dashed var(--line2);border-radius:12px;padding:14px;font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+  .addgroup:not(:disabled):hover{border-color:var(--fg);color:var(--fg)}
+
+  .colors{display:flex;flex-wrap:wrap;gap:10px 4px}
+  .color{display:flex;flex-direction:column;align-items:center;gap:5px;width:74px;font-size:11px;color:var(--muted);text-align:center;line-height:1.2}
+  .color .sw-btn{display:block}
+  .color i{display:block;width:36px;height:36px;border-radius:50%;outline:1px solid var(--line2);outline-offset:2px;transition:.15s;position:relative;overflow:hidden}
   .color i::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.45),transparent 45%)}
   .color.on i{outline:2px solid var(--fg)}
   .color.on{color:var(--fg)}
-  .color .badge{position:absolute;inset:0;display:grid;place-items:center;font-weight:600;font-size:13px;color:#fff;text-shadow:0 1px 3px #000;z-index:1}
-  .limit{display:inline-block;font-size:12px;color:var(--gold);margin-bottom:12px}
-  .face{border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:12px}
-  .face h5{font-weight:400;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-  .face .opts{margin-bottom:12px}
-  .sub{display:grid;gap:12px}
-  label.f{display:grid;gap:6px;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim)}
-  input[type=text],textarea,select{background:var(--bg);border:1px solid var(--line2);border-radius:10px;padding:12px 14px;color:var(--fg);font:inherit;font-size:15px;letter-spacing:.02em;text-transform:none;width:100%}
-  input[type=text]:focus,textarea:focus,select:focus{outline:none;border-color:var(--fg)}
-  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .drop{display:block;border:1px dashed var(--line2);border-radius:10px;padding:16px;text-align:center;font-size:13px;color:var(--muted);cursor:pointer}
-  .drop:hover{border-color:var(--fg)}
-  .note{font-size:12px;color:var(--dim);margin-top:10px}
-  .note a{text-decoration:underline}
+  .color.used i{outline-color:var(--gold)}
+  .color.blocked{opacity:.35}
+  .color .badge{position:absolute;inset:0;display:grid;place-items:center;font-weight:600;font-size:14px;color:#fff;text-shadow:0 1px 3px #000;z-index:1}
+  .stepper{display:flex;border:1px solid var(--line2);border-radius:999px;overflow:hidden}
+  .stepper button{width:24px;height:20px;font-size:14px;line-height:1;color:var(--fg)}
+  .stepper button:hover{background:rgba(255,255,255,.1)}
   .engcolors .color i.metal{background-image:linear-gradient(135deg,rgba(255,255,255,.7),rgba(255,255,255,0) 40%,rgba(0,0,0,.35) 75%,rgba(255,255,255,.3))!important}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--dim);margin-top:8px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
 
-  .summary{background:var(--fg);color:var(--bg);border-radius:var(--radius);padding:20px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-  .summary .sumtxt{font-size:14px;line-height:1.4;flex:1;min-width:200px}
-  .summary .sumtxt b{display:block;font-size:20px;font-weight:500;letter-spacing:.04em}
-  .summary button{background:var(--bg);color:var(--fg);padding:14px 24px;border-radius:999px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:500}
-  .summary button:hover{background:#2a2a2e}
+  .face{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}
+  .face h5{font-weight:400;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .face .opts{margin-bottom:10px}
+  .sub{display:grid;gap:10px}
+  label.f{display:grid;gap:6px;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim)}
+  input[type=text],textarea,select{background:var(--bg);border:1px solid var(--line2);border-radius:10px;padding:11px 13px;color:var(--fg);font:inherit;font-size:15px;letter-spacing:.02em;text-transform:none;width:100%}
+  input[type=text]:focus,textarea:focus,select:focus{outline:none;border-color:var(--fg)}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .drop{display:block;border:1px dashed var(--line2);border-radius:10px;padding:14px;text-align:center;font-size:13px;color:var(--muted);cursor:pointer}
+  .drop:hover{border-color:var(--fg)}
+
+  .summary{background:var(--fg);color:var(--bg);border-radius:var(--radius);padding:20px 24px;display:grid;gap:14px}
+  .summary .top{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .summary .sumtxt{flex:1;min-width:200px;font-size:14px;line-height:1.4}
+  .summary .sumtxt b{display:block;font-size:20px;font-weight:500;letter-spacing:.03em}
+  .summary .issues{font-size:13px;color:#8a2a22;display:grid;gap:2px}
+  .summary .fee{font-size:13px;opacity:.75}
+  .summary button.send{background:var(--bg);color:var(--fg);padding:14px 24px;border-radius:999px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:500}
+  .summary button.send:not(:disabled):hover{background:#2a2a2e}
 
   /* PROCESO */
   .process{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
@@ -170,34 +216,16 @@
   footer.site a:hover{color:var(--fg);border-color:var(--fg)}
   .disclaimer{margin-top:26px;font-size:12px;color:var(--dim)}
 
-  /* PEDIDO (drawer) */
-  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:.25s;z-index:80}
-  .drawer{position:fixed;top:0;right:0;height:100%;width:min(460px,100%);background:var(--bg2);border-left:1px solid var(--line);z-index:90;transform:translateX(100%);transition:.3s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column}
-  body.cart-open .scrim{opacity:1;pointer-events:auto}
-  body.cart-open .drawer{transform:none}
-  .drawer header{display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1px solid var(--line)}
-  .drawer header h3{font-weight:400;letter-spacing:.3em;text-transform:uppercase;font-size:15px}
-  .drawer .items{flex:1;overflow:auto;padding:12px 24px}
-  .item{display:grid;grid-template-columns:52px 1fr;gap:14px;align-items:start;padding:14px 0;border-bottom:1px solid var(--line)}
-  .item svg{width:48px;height:auto}
-  .item h6{font-weight:400;font-size:15px;letter-spacing:.06em}
-  .item p{font-size:12px;color:var(--muted);line-height:1.5}
-  .item .rm{font-size:11px;color:var(--dim);letter-spacing:.15em;text-transform:uppercase;margin-top:6px}
-  .item .rm:hover{color:var(--fg)}
-  .empty{color:var(--dim);text-align:center;padding:60px 0;font-size:14px}
-  .drawer .foot{border-top:1px solid var(--line);padding:18px 24px;display:grid;gap:12px}
-  .drawer .btn{width:100%}
-
   /* MODAL de envío */
   .modal{position:fixed;inset:0;z-index:120;display:none;place-items:center;background:rgba(0,0,0,.7);padding:16px}
   .modal.show{display:grid}
   .modal .box{background:var(--bg2);border:1px solid var(--line2);border-radius:18px;max-width:560px;width:100%;padding:26px;display:grid;gap:14px;max-height:90vh;overflow:auto}
   .modal h3{font-weight:400;letter-spacing:.25em;text-transform:uppercase;font-size:15px}
   .modal ol{padding-left:18px;color:var(--muted);font-size:14px;display:grid;gap:4px}
-  .modal textarea{font-size:13px;min-height:200px;font-family:ui-monospace,Consolas,monospace}
+  .modal textarea{font-size:13px;min-height:220px;font-family:ui-monospace,Consolas,monospace}
   .modal .acts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
-  .toast{position:fixed;left:50%;bottom:26px;translate:-50% 20px;background:var(--fg);color:var(--bg);padding:12px 22px;border-radius:999px;font-size:14px;opacity:0;transition:.3s;z-index:130;pointer-events:none}
+  .toast{position:fixed;left:50%;bottom:26px;translate:-50% 20px;background:var(--fg);color:var(--bg);padding:12px 22px;border-radius:999px;font-size:14px;opacity:0;transition:.3s;z-index:130;pointer-events:none;max-width:90vw;text-align:center}
   .toast.show{opacity:1;translate:-50% 0}
 
   @media (max-width:1060px){ .shapes{grid-template-columns:repeat(3,1fr)} }
@@ -220,9 +248,13 @@
     section{padding:80px 0}
     .process{grid-template-columns:1fr}
     .process div{border-right:0;border-bottom:1px solid var(--line)}
-    .spec{grid-template-columns:repeat(2,1fr)}
     .row2,.modal .acts{grid-template-columns:1fr}
-    .stage{padding:16px}
+    .stage{padding:14px}
+    .strip,.strip.n8{grid-template-columns:repeat(6,1fr)}
+    .strip.n4{grid-template-columns:repeat(4,1fr)}
+    .step{padding:18px 14px}
+    .g-head{grid-template-columns:36px 1fr;padding:12px 10px}
+    .g-head .acts{grid-column:1/-1;justify-content:flex-end}
   }
 </style>
 </head>
@@ -251,9 +283,9 @@
       <a href="#modelos">Modelos</a>
       <a href="#espesores">Colores</a>
       <a href="#grabados">Grabados</a>
-      <a href="#pedido">Armá tu pedido</a>
+      <a href="#pedido">Armá tu pack</a>
     </div>
-    <button class="cartbtn" id="openCart">Pedido <b id="cartCount">0</b></button>
+    <a class="cartbtn" href="#pedido">Pack <b id="navCount">0/6</b></a>
   </div>
 </nav>
 
@@ -267,9 +299,9 @@
     <svg class="hero-logo"><use href="#logo"/></svg>
     <div class="wordmark">ARKAM</div>
     <div class="eyebrow" style="margin-top:10px">Custom Guitar Picks · Argentina</div>
-    <p class="lead">Púas de acrílico personalizadas. Elegí modelo, espesor, colores, grabado y terminación, y mandanos tu pedido.</p>
+    <p class="lead">Púas de acrílico personalizadas. Armá tu pack combinando modelos, espesores, colores, grabados y terminaciones.</p>
     <div class="btns">
-      <a class="btn primary" href="#pedido">Armá tu pedido</a>
+      <a class="btn primary" href="#pedido">Armá tu pack</a>
       <a class="btn ghost" href="#modelos">Ver modelos</a>
     </div>
   </div>
@@ -280,7 +312,7 @@
     <div class="sec-head">
       <div class="eyebrow">01 · Modelos</div>
       <h2>Nuestras <span class="serif">púas</span></h2>
-      <p>Cinco siluetas. Tocá una para empezar tu pedido con ese modelo.</p>
+      <p>Cinco siluetas. Tocá una para sumarla a tu pack.</p>
     </div>
     <div class="shapes" id="shapeCards"></div>
   </div>
@@ -291,7 +323,7 @@
     <div class="sec-head">
       <div class="eyebrow">02 · Espesores y colores</div>
       <h2>Tres <span class="serif">calibres</span></h2>
-      <p>Cada espesor tiene su propia paleta. Con 4 púas elegís 1 color, con 6 u 8 hasta 2 colores y con 12 hasta 3.</p>
+      <p id="colorRuleTxt"></p>
     </div>
     <div class="thick" id="thickCards"></div>
   </div>
@@ -313,14 +345,15 @@
   <div class="wrap">
     <div class="sec-head">
       <div class="eyebrow">04 · Pedido</div>
-      <h2>Armá tu <span class="serif">pedido</span></h2>
-      <p>Configurá cada pack, mirá la vista previa y sumalo al pedido. Podés combinar modelos (por ejemplo 6 Arkam y 6 Shuriken).</p>
+      <h2>Armá tu <span class="serif">pack</span></h2>
+      <p>Elegí cuántas púas querés y armalas por grupos. Cada grupo tiene su propio modelo, espesor, colores, grabado y terminación: podés combinar todo lo que quieras dentro del mismo pack.</p>
     </div>
 
     <div class="config">
       <div class="stage">
         <div class="stage-view">
           <div class="texture"></div>
+          <div class="stage-label" id="stageLabel"></div>
           <div class="side-toggle" id="sideToggle" hidden>
             <button class="on" data-side="front">Frente</button>
             <button data-side="back">Dorso</button>
@@ -328,57 +361,43 @@
           <svg id="preview" viewBox="-42 -14 184 150"></svg>
           <div class="dist" id="dist"></div>
         </div>
-        <div class="spec">
-          <div><span>Modelo</span><b id="sShape">—</b></div>
-          <div><span>Espesor</span><b id="sThick">—</b></div>
-          <div><span>Cantidad</span><b id="sQty">—</b></div>
-          <div><span>Grabado</span><b id="sEng">—</b></div>
-          <div><span>Color grabado</span><b id="sEngColor">—</b></div>
-          <div><span>Terminación</span><b id="sFinish">—</b></div>
+        <div class="pack-h">Tu pack <b id="packTxt"></b></div>
+        <div class="strip" id="strip"></div>
+        <div class="meters">
+          <div class="meter"><span>Púas asignadas</span><b id="mQty"></b><div class="bar"><i id="mQtyBar"></i></div></div>
+          <div class="meter"><span>Colores usados</span><b id="mCol"></b><div class="bar"><i id="mColBar"></i></div></div>
         </div>
       </div>
 
       <div class="steps">
         <div class="step">
-          <div class="step-h"><span class="n">01</span><h4>Cantidad</h4><span class="val" id="vQty"></span></div>
-          <div class="opts c4" id="optQty"></div>
+          <div class="step-h"><span class="n">01</span><h4>Cantidad total</h4><span class="val" id="vTotal"></span></div>
+          <div class="opts c4" id="optTotal"></div>
+          <p class="note" id="limitNote"></p>
         </div>
+
         <div class="step">
-          <div class="step-h"><span class="n">02</span><h4>Modelo</h4><span class="val" id="vShape"></span></div>
-          <div class="opts c5" id="optShape"></div>
+          <div class="step-h"><span class="n">02</span><h4>Grupos de púas</h4><span class="val" id="vGroups"></span></div>
+          <div id="groups"></div>
+          <button class="addgroup" id="addGroup">+ Agregar otro grupo</button>
+          <p class="note">Ejemplo: 2 Arkam de 2 mm negras con logo + 2 Shuriken de 3 mm verdes con tu nombre + 2 Mini de 2.4 mm lisas y mate (1 verde y 1 naranja).</p>
         </div>
+
         <div class="step">
-          <div class="step-h"><span class="n">03</span><h4>Espesor</h4><span class="val" id="vThick"></span></div>
-          <div class="opts c3" id="optThick"></div>
-        </div>
-        <div class="step">
-          <div class="step-h"><span class="n">04</span><h4>Colores</h4><span class="val" id="vColor"></span></div>
-          <span class="limit" id="limitTxt"></span>
-          <div class="colors" id="optColor"></div>
-          <p class="note">Los colores disponibles dependen del espesor. Las púas se reparten en partes iguales entre los colores elegidos; si querés otra distribución, aclarala en observaciones.</p>
-        </div>
-        <div class="step">
-          <div class="step-h"><span class="n">05</span><h4>Grabado</h4><span class="val" id="vEng"></span></div>
-          <div class="opts c3" id="optEng"></div>
-          <div id="faces"></div>
-          <p class="note">Logos en PNG, PDF, SVG o EPS, en la mejor calidad posible y en blanco y negro. Si querés otra tipografía para tu nombre, buscala en <a href="https://www.dafont.com/es/" target="_blank" rel="noopener">dafont.com</a> y aclarala en observaciones.</p>
-        </div>
-        <div class="step" id="stepEngColor">
-          <div class="step-h"><span class="n">06</span><h4>Color del grabado</h4><span class="val" id="vEngColor"></span></div>
-          <div class="colors engcolors" id="optEngColor"></div>
-        </div>
-        <div class="step">
-          <div class="step-h"><span class="n">07</span><h4>Terminación</h4><span class="val" id="vFinish"></span></div>
-          <div class="opts c3" id="optFinish"></div>
-        </div>
-        <div class="step">
-          <div class="step-h"><span class="n">08</span><h4>Observaciones</h4></div>
-          <textarea id="notes" rows="2" placeholder="Ej: logo A de un lado y nombre del otro, 4 rojas y 2 negras…"></textarea>
+          <div class="step-h"><span class="n">03</span><h4>Tus datos</h4></div>
+          <div class="sub">
+            <label class="f">Nombre y apellido o usuario de Instagram<input type="text" id="custName" placeholder="@tuusuario"></label>
+            <label class="f">Observaciones<textarea id="notes" rows="2" placeholder="Algo que tengamos que saber…"></textarea></label>
+          </div>
         </div>
 
         <div class="summary">
-          <div class="sumtxt"><b id="sumTitle"></b><span id="sumSub"></span></div>
-          <button id="addBtn">Agregar al pedido</button>
+          <div class="top">
+            <div class="sumtxt"><b id="sumTitle"></b><span id="sumSub"></span></div>
+            <button class="send" id="sendBtn">Enviar pedido</button>
+          </div>
+          <div class="issues" id="issues"></div>
+          <div class="fee" id="fee"></div>
         </div>
       </div>
     </div>
@@ -392,7 +411,7 @@
       <h2>De tu idea a tu <span class="serif">mano</span></h2>
     </div>
     <div class="process">
-      <div><div class="k">i.</div><h5>Configurás</h5><p>Armás uno o más packs: modelo, espesor, colores, grabado y terminación.</p></div>
+      <div><div class="k">i.</div><h5>Armás tu pack</h5><p>Elegís la cantidad y la repartís en grupos con distintos modelos, espesores, colores y grabados.</p></div>
       <div><div class="k">ii.</div><h5>Nos escribís</h5><p>Enviás el resumen por Instagram junto con los archivos de tus logos.</p></div>
       <div><div class="k">iii.</div><h5>Confirmamos</h5><p>Revisamos el diseño con vos y coordinamos el pago.</p></div>
       <div><div class="k">iv.</div><h5>Fabricamos</h5><p>Cortamos, grabamos y terminamos cada púa de forma artesanal.</p></div>
@@ -409,16 +428,6 @@
     <p class="disclaimer">Vista previa de diseño · Las imágenes de las púas son ilustrativas.</p>
   </div>
 </footer>
-
-<div class="scrim" id="scrim"></div>
-<aside class="drawer" aria-label="Pedido">
-  <header><h3>Tu pedido</h3><button id="closeCart" aria-label="Cerrar" style="font-size:22px">×</button></header>
-  <div class="items" id="items"></div>
-  <div class="foot">
-    <label class="f">Nombre y apellido o usuario de Instagram<input type="text" id="custName" placeholder="@tuusuario"></label>
-    <button class="btn primary" id="sendBtn">Enviar pedido por Instagram</button>
-  </div>
-</aside>
 
 <div class="modal" id="modal">
   <div class="box">
@@ -439,8 +448,15 @@
 <div class="toast" id="toast"></div>
 
 <script>
-/* ====== DATOS (según el formulario de ARKAM) ====== */
-const IG_USER = 'arkam_arg';
+/* =====================================================================
+   DATOS (según el formulario de ARKAM) — editables
+   ===================================================================== */
+const TOTALS = [4, 6, 8, 12];
+// Máximo de colores distintos por pack (se cuentan por nombre: "Verde Flúor"
+// en 2.4 mm y en 3 mm cuenta como un solo color).
+const COLOR_LIMIT = {4:2, 6:3, 8:3, 12:4};
+const LOGO_EXTRA = 3000;
+
 const ARKAM_D = 'M50 112 C47 112 45 110 43 107 L14 64 C10 58 8 52 8 46 C8 24 27 8 50 8 C73 8 92 24 92 46 C92 52 90 58 86 64 L57 107 C55 110 53 112 50 112Z';
 const SHAPES = {
   arkam:{name:'Arkam', desc:'Nuestro diseño insignia: cabeza redonda y punta definida.', scale:.95, d:ARKAM_D},
@@ -468,52 +484,47 @@ const THICK = {
     ['Magenta Traslúcido','#e0158f',TR],['Verde Flúor Traslúcido','#9dff1f',TR],['Transparente','#eef3f6',.22],
     ['Rojo','#c8102e',.97],['Blanco Opal','#f2efe9',.86]]}
 };
-const QTY = [4,6,8,12];
-const colorLimit = q => q<=4 ? 1 : q<=8 ? 2 : 3;
 const ENG = {none:'Sin grabado', simple:'Simple faz', double:'Doble faz'};
 const FACE_TYPES = {logo:'Logo', name:'Nombre', grip:'Grip'};
 const GRIPS = {hex:'Hexagonal / Panal', tire:'Llantas', claw:'Garras'};
+const FONTS = [['Jost','Moderna'],['Cormorant Garamond','Clásica'],['UnifrakturCook','Gótica']];
 const ENG_COLORS = [
   ['Negro','#111111'],['Blanco','#f7f7f7'],['Rojo','#d0161f'],['Amarillo','#f3cc00'],
   ['Aluminio','#b9bdc3',1],['Dorado','#c9a24a',1],['Naranja Metalizado','#e07a2a',1],['Verde Metalizado','#3fa357',1],
   ['Púrpura Metalizado','#8a4bd6',1],['Azul Claro Metalizado','#4fa6e0',1],['Sin pintar, solo grabado',null]
 ];
 const FINISH = {
-  'Brillante':'Superficie pulida, con brillo espejado.',
-  'Mixto':'Combina zonas brillantes y mate.',
-  'Mate':'Acabado satinado, más agarre al tacto.'
+  'Brillante':'Pulida, brillo espejado.',
+  'Mixto':'Zonas brillantes y mate.',
+  'Mate':'Satinada, más agarre.'
 };
-
-const newFace = type => ({type, text:'', font:'Jost', grip:'hex', file:null, fileName:''});
-const state = {qty:6, shape:'arkam', thick:'2.4', colors:[0], eng:'simple',
-  faces:{front:newFace('logo'), back:newFace('grip')}, engColor:5, finish:'Brillante', side:'front'};
-let cart = [];
-try{ cart = JSON.parse(localStorage.getItem('arkam-cart')||'[]') }catch(e){}
 
 const $ = s => document.querySelector(s);
 const esc = t => String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const isDark = hex => {const n=parseInt(hex.slice(1),16);return ((n>>16)*.3+((n>>8)&255)*.59+(n&255)*.11)<90};
+const money = n => '$' + n.toLocaleString('es-AR');
 let uid = 0;
 
-/* ====== RENDER DE UNA PÚA ======
-   o = {eng:'brand'|'logo'|'name'|'grip'|'none', text, font, grip, fileUrl, engColor:[name,hex,metal], finish} */
+/* =====================================================================
+   RENDER DE UNA PÚA (SVG)
+   o = {eng:'brand'|'logo'|'name'|'grip'|'none', text, font, grip, fileUrl, engColor, finish}
+   ===================================================================== */
 function pickSVG(shape, hex, opacity, o={}){
   const s = SHAPES[shape], id = 'p'+(uid++);
   const sc = s.scale, tx = 50*(1-sc), ty = 60*(1-sc);
-  const cy = s.tri ? 42 : 52;                       // centro de la zona de grabado
+  const cy = s.tri ? 42 : 52;
   const ec = o.engColor || ['Sin pintar', null];
-  const raw = !ec[1];
   const darkPick = isDark(hex) && opacity>.8;
-  const ink = raw ? (darkPick ? 'rgba(255,255,255,.28)' : 'rgba(0,0,0,.22)')
-                  : (ec[2] ? `url(#${id}m)` : ec[1]);
-  const inkSolid = raw ? (darkPick ? 'rgba(255,255,255,.28)' : 'rgba(0,0,0,.22)') : ec[1];
+  const rawInk = darkPick ? 'rgba(255,255,255,.28)' : 'rgba(0,0,0,.22)';
+  const inkSolid = ec[1] || rawInk;
+  const ink = ec[2] ? `url(#${id}m)` : inkSolid;
   let defs = '', eng = '';
   if(ec[2]) defs += `<linearGradient id="${id}m" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset=".25" stop-color="${ec[1]}"/>
+      <stop offset="0" stop-color="#fff"/><stop offset=".25" stop-color="${ec[1]}"/>
       <stop offset=".6" stop-color="${ec[1]}"/><stop offset=".8" stop-color="#000" stop-opacity=".9"/><stop offset="1" stop-color="${ec[1]}"/></linearGradient>`;
 
   if(o.eng==='brand' || (o.eng==='logo' && !o.fileUrl)){
-    eng = `<use href="#logo" x="31" y="${cy-18}" width="38" height="35" color="${inkSolid}" ${o.eng==='logo'?'opacity=".9"':''}/>`;
+    eng = `<use href="#logo" x="31" y="${cy-18}" width="38" height="35" color="${inkSolid}"/>`;
   } else if(o.eng==='logo'){
     defs += `<filter id="${id}f" color-interpolation-filters="sRGB">
       <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -.33 -.33 -.33 0 1" result="a"/>
@@ -523,16 +534,14 @@ function pickSVG(shape, hex, opacity, o={}){
   } else if(o.eng==='name'){
     const t = o.text || 'TU NOMBRE';
     const fs = Math.max(6, Math.min(17, 118/Math.max(t.length,4)));
-    eng = `<text x="50" y="${cy}" text-anchor="middle" dominant-baseline="middle" font-family="${o.font||'Jost'}" font-size="${fs}" font-weight="600" letter-spacing="${o.font==='Jost'?1.2:0}" fill="${ink}" ${o.text?'':'opacity=".45"'}>${esc(t)}</text>`;
+    eng = `<text x="50" y="${cy}" text-anchor="middle" dominant-baseline="middle" font-family="${o.font||'Jost'}" font-size="${fs}" font-weight="600" letter-spacing="${(o.font||'Jost')==='Jost'?1.2:0}" fill="${ink}" ${o.text?'':'opacity=".45"'}>${esc(t)}</text>`;
   } else if(o.eng==='grip'){
     const st = `stroke="${ink}" fill="none"`;
     if(o.grip==='hex') defs += `<pattern id="${id}p" width="9" height="5.2" patternUnits="userSpaceOnUse"><path d="M0 2.6 L1.5 0 H4.5 L6 2.6 L4.5 5.2 H1.5Z M6 2.6 H9" ${st} stroke-width=".9"/></pattern>`;
     if(o.grip==='tire') defs += `<pattern id="${id}p" width="8" height="6" patternUnits="userSpaceOnUse"><path d="M0 0 L4 3 L8 0 M0 3 L4 6 L8 3" ${st} stroke-width="1.5"/></pattern>`;
-    if(o.grip==='claw'){
-      eng = `<g fill="${ink}">${[-11,0,11].map(dx=>`<path transform="translate(${dx} 0) rotate(14 50 ${cy})" d="M50 ${cy-24} C53 ${cy-10} 53 ${cy+8} 49 ${cy+24} C50 ${cy+8} 49 ${cy-8} 50 ${cy-24}Z"/>`).join('')}</g>`;
-    } else {
-      eng = `<ellipse cx="50" cy="${cy}" rx="27" ry="${s.tri?22:25}" fill="url(#${id}p)"/>`;
-    }
+    eng = o.grip==='claw'
+      ? `<g fill="${ink}">${[-11,0,11].map(dx=>`<path transform="translate(${dx} 0) rotate(14 50 ${cy})" d="M50 ${cy-24} C53 ${cy-10} 53 ${cy+8} 49 ${cy+24} C50 ${cy+8} 49 ${cy-8} 50 ${cy-24}Z"/>`).join('')}</g>`
+      : `<ellipse cx="50" cy="${cy}" rx="27" ry="${s.tri?22:25}" fill="url(#${id}p)"/>`;
   }
   const fin = o.finish || 'Brillante';
   const gloss = fin==='Mate' ? .12 : .55;
@@ -561,10 +570,12 @@ function pickSVG(shape, hex, opacity, o={}){
   </g>`;
 }
 
-/* ====== SECCIONES INFORMATIVAS ====== */
+/* =====================================================================
+   SECCIONES INFORMATIVAS
+   ===================================================================== */
 document.querySelectorAll('.float-pick').forEach(el=>{
   const c = THICK[el.dataset.t].colors[+el.dataset.c];
-  el.innerHTML = pickSVG(el.dataset.shape, c[1], c[2], {eng:'brand', engColor:['Sin pintar',null]});
+  el.innerHTML = pickSVG(el.dataset.shape, c[1], c[2], {eng:'brand'});
 });
 const showcase = {arkam:['2.4',5], shuriken:['2.0',0], lp:['3.0',2], mini:['2.4',1], bass:['2.4',2]};
 $('#shapeCards').innerHTML = Object.entries(SHAPES).map(([k,s])=>{
@@ -575,7 +586,12 @@ $('#shapeCards').innerHTML = Object.entries(SHAPES).map(([k,s])=>{
     <div class="mm">${s.thick ? '3 mm · 2 y 2.4 mm a pedido' : '2 · 2.4 · 3 mm'}</div>
     <p>${s.desc}</p>
   </div>`}).join('');
-document.querySelectorAll('.shape-card').forEach(c=>c.onclick=()=>{setShape(c.dataset.shape);render();$('#pedido').scrollIntoView()});
+document.querySelectorAll('.shape-card').forEach(c=>c.onclick=()=>{
+  // si el grupo activo está vacío lo reutiliza; si no, crea uno nuevo
+  let g = activeGroup();
+  if(!g || gQty(g)>0){ if(remaining()<=0){ toast(`Tu pack de ${S.total} ya está completo`); $('#pedido').scrollIntoView(); return; } g = addGroup(); }
+  setShape(g, c.dataset.shape); render(); $('#pedido').scrollIntoView();
+});
 
 const thickDesc = {'2.0':'Ágil y flexible al ataque.', '2.4':'El equilibrio: definición sin perder velocidad. La paleta más amplia.', '3.0':'Máximo ataque y cuerpo.'};
 $('#thickCards').innerHTML = Object.entries(THICK).map(([k,t])=>`
@@ -585,6 +601,8 @@ $('#thickCards').innerHTML = Object.entries(THICK).map(([k,t])=>`
     <p>${thickDesc[k]} ${t.colors.length} colores.</p>
     <div class="swatches">${t.colors.map(c=>`<span class="sw ${c[2]<.8?'tr':''}" title="${c[0]}" style="background:${c[1]}"></span>`).join('')}</div>
   </div>`).join('');
+$('#colorRuleTxt').textContent = 'Cada espesor tiene su propia paleta. Podés mezclar espesores y colores dentro del mismo pack: '
+  + TOTALS.map(t=>`${t} púas → hasta ${COLOR_LIMIT[t]} colores`).join(' · ') + '.';
 
 const engDemo = [
   ['Logo', 'Subí tu logo en blanco y negro. Lo grabamos con el color que elijas.', {eng:'brand', engColor:ENG_COLORS[5]}, ['2.4',5]],
@@ -595,181 +613,321 @@ $('#engCards').innerHTML = engDemo.map(([t,p,o,[th,ci]])=>{
   const c = THICK[th].colors[ci];
   return `<div class="eng-card"><svg viewBox="0 0 100 120">${pickSVG('arkam',c[1],c[2],o)}</svg><div><h3>${t}</h3><p>${p}</p></div></div>`}).join('');
 
-/* ====== CONFIGURADOR ====== */
-function opts(container, items, isOn, onPick, html){
-  const el = $(container);
-  el.innerHTML = items.map(([v,label])=>`<button class="opt ${isOn(v)?'on':''}" data-v="${v}">${html?html(v,label):label}</button>`).join('');
-  el.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{onPick(b.dataset.v);render()});
+/* =====================================================================
+   ESTADO DEL PACK
+   Un pack tiene un total (4/6/8/12) repartido en grupos. Cada grupo define
+   modelo, espesor, grabado y terminación, y cuántas púas lleva de cada color.
+   ===================================================================== */
+const newFace = type => ({type, text:'', font:'Jost', grip:'hex', file:null, fileName:''});
+let gid = 0;
+const newGroup = () => ({id:++gid, shape:'arkam', thick:'2.4', counts:{}, eng:'none',
+  faces:{front:newFace('logo'), back:newFace('name')}, engColor:5, finish:'Brillante'});
+const S = {total:6, groups:[], active:null, side:'front'};
+
+const activeGroup = () => S.groups.find(g=>g.id===S.active);
+const gQty = g => Object.values(g.counts).reduce((a,b)=>a+b,0);
+const assigned = () => S.groups.reduce((a,g)=>a+gQty(g),0);
+const remaining = () => S.total - assigned();
+const colorName = (g,i) => THICK[g.thick].colors[i][0];
+const limit = () => COLOR_LIMIT[S.total];
+function usedNames(){
+  const set = new Set();
+  S.groups.forEach(g=>Object.entries(g.counts).forEach(([i,n])=>{ if(n>0) set.add(colorName(g,i)) }));
+  return set;
 }
-function setShape(k){
-  state.shape = k;
+const groupSides = g => g.eng==='none' ? [] : g.eng==='simple' ? ['front'] : ['front','back'];
+const onReq = (g,v) => (SHAPES[g.shape].onRequest||[]).includes(v);
+
+function addGroup(){
+  const g = newGroup();
+  const prev = S.groups[S.groups.length-1];
+  if(prev){ g.shape = prev.shape; g.thick = prev.thick; g.finish = prev.finish; }
+  S.groups.push(g); S.active = g.id; S.side = 'front';
+  return g;
+}
+function setShape(g, k){
+  g.shape = k;
   const s = SHAPES[k];
-  if(s.thick && !s.thick.includes(state.thick)){ state.thick = s.thick[0]; state.colors=[0]; }
+  if(s.thick && !s.thick.includes(g.thick)) setThick(g, s.thick[0]);
 }
-const onReq = v => (SHAPES[state.shape].onRequest||[]).includes(v);
-function colorDist(){
-  const n = state.colors.length, base = Math.floor(state.qty/n), rem = state.qty % n;
-  return state.colors.map((ci,i)=>[THICK[state.thick].colors[ci], base + (i<rem?1:0)]);
+// al cambiar de espesor, conserva los colores que existen con el mismo nombre
+function setThick(g, t){
+  if(g.thick===t) return;
+  const old = THICK[g.thick].colors, pal = THICK[t].colors, counts = {};
+  let lost = 0;
+  Object.entries(g.counts).forEach(([i,n])=>{
+    const j = pal.findIndex(c=>c[0]===old[i][0]);
+    if(j>-1) counts[j] = (counts[j]||0)+n; else lost += n;
+  });
+  g.thick = t; g.counts = counts;
+  if(lost) toast(`Se quitaron ${lost} púa${lost>1?'s':''}: ese color no existe en ${THICK[t].label}`);
 }
-function faceOpts(side){
-  const f = state.faces[side];
-  return {eng: state.eng==='none' ? 'none' : f.type, text:f.text, font:f.font, grip:f.grip, fileUrl:f.file,
-          engColor:ENG_COLORS[state.engColor], finish:state.finish};
+function inc(g, i){
+  if(remaining()<=0){ toast(`Ya asignaste las ${S.total} púas del pack`); return; }
+  if(!g.counts[i]){
+    const names = usedNames(), nm = colorName(g,i);
+    if(!names.has(nm) && names.size>=limit()){ toast(`Con ${S.total} púas podés usar hasta ${limit()} colores distintos`); return; }
+  }
+  g.counts[i] = (g.counts[i]||0)+1;
 }
+function dec(g, i){ if(g.counts[i]>1) g.counts[i]--; else delete g.counts[i]; }
+
+/* ---------- textos de resumen ---------- */
+const fontLabel = f => (FONTS.find(x=>x[0]===f)||[,'Otra'])[1];
 function faceDesc(f){
-  if(f.type==='logo') return 'logo' + (f.fileName ? ` (${f.fileName})` : '');
-  if(f.type==='name') return `nombre "${f.text}" (${({'Jost':'Moderna','Cormorant Garamond':'Clásica','UnifrakturCook':'Gótica'})[f.font]})`;
+  if(f.type==='logo') return 'logo' + (f.fileName ? ` (${f.fileName})` : ' (archivo por chat)');
+  if(f.type==='name') return `nombre "${f.text}" (tipografía ${fontLabel(f.font)})`;
   return 'grip ' + GRIPS[f.grip];
 }
+function groupTitle(g){ return `${gQty(g)} × ${SHAPES[g.shape].name} · ${THICK[g.thick].label}${onReq(g,g.thick)?' (a pedido)':''}`; }
+function groupColorsTxt(g){
+  const e = Object.entries(g.counts);
+  return e.length ? e.map(([i,n])=>`${n} ${colorName(g,i)}`).join(', ') : 'sin colores elegidos';
+}
+function groupEngTxt(g){
+  if(g.eng==='none') return 'sin grabado';
+  const sides = groupSides(g).map(sd=>g.faces[sd]);
+  return `${ENG[g.eng].toLowerCase()}: ` + sides.map((f,i)=>(sides.length>1?(i?'B ':'A '):'')+FACE_TYPES[f.type].toLowerCase()).join(' / ');
+}
 
-function renderFaces(){
-  const sides = state.eng==='none' ? [] : state.eng==='simple' ? ['front'] : ['front','back'];
-  $('#faces').innerHTML = sides.map(side=>{
-    const f = state.faces[side];
-    return `<div class="face" data-side="${side}">
-      <h5>${state.eng==='simple' ? 'Qué grabamos' : side==='front' ? 'Lado A · Frente' : 'Lado B · Dorso'}</h5>
-      <div class="opts c3">${Object.entries(FACE_TYPES).map(([k,l])=>`<button class="opt ${f.type===k?'on':''}" data-type="${k}">${l}</button>`).join('')}</div>
-      <div class="sub">
-      ${f.type==='logo' ? `<label class="drop">${f.fileName ? '✓ '+esc(f.fileName)+' · tocá para cambiar' : 'Subí tu logo (PNG, PDF, SVG o EPS)'}<input type="file" accept=".png,.jpg,.jpeg,.svg,.pdf,.eps,image/*" hidden></label>` : ''}
-      ${f.type==='name' ? `<div class="row2"><label class="f">Texto<input type="text" maxlength="16" value="${esc(f.text)}" placeholder="Tu nombre"></label>
-         <label class="f">Tipografía<select>${[['Jost','Moderna'],['Cormorant Garamond','Clásica'],['UnifrakturCook','Gótica']].map(([v,l])=>`<option value="${v}" ${f.font===v?'selected':''}>${l}</option>`).join('')}</select></label></div>` : ''}
-      ${f.type==='grip' ? `<div class="opts c3">${Object.entries(GRIPS).map(([k,l])=>`<button class="opt ${f.grip===k?'on':''}" data-grip="${k}">${l}</button>`).join('')}</div>` : ''}
-      </div></div>`;
-  }).join('');
-  $('#faces').querySelectorAll('.face').forEach(el=>{
-    const side = el.dataset.side, f = state.faces[side];
-    const focus = () => { state.side = side; };
-    el.querySelectorAll('[data-type]').forEach(b=>b.onclick=()=>{f.type=b.dataset.type;focus();render()});
-    el.querySelectorAll('[data-grip]').forEach(b=>b.onclick=()=>{f.grip=b.dataset.grip;focus();render()});
-    const inp = el.querySelector('input[type=text]');
-    if(inp) inp.oninput = ()=>{f.text=inp.value;focus();renderPreview();renderSummary()};
-    const sel = el.querySelector('select');
-    if(sel) sel.onchange = ()=>{f.font=sel.value;focus();render()};
-    const file = el.querySelector('input[type=file]');
-    if(file) file.onchange = e=>{
-      const x = e.target.files[0]; if(!x) return;
-      f.file = /\.(png|jpe?g|svg|gif|webp)$/i.test(x.name) ? URL.createObjectURL(x) : null;
-      f.fileName = x.name; focus(); render();
-    };
+/* ---------- logos y adicional ---------- */
+function logoInfo(){
+  const keys = new Set(); let anyDouble = false;
+  S.groups.forEach(g=>{
+    if(!gQty(g)) return;
+    if(g.eng==='double') anyDouble = true;
+    groupSides(g).forEach(sd=>{ const f=g.faces[sd]; if(f.type==='logo') keys.add(f.fileName || `g${g.id}${sd}`) });
   });
+  const included = keys.size ? (anyDouble ? 2 : 1) : 0;
+  return {count:keys.size, included, extra:Math.max(0, keys.size-included)};
+}
+
+/* ---------- validación ---------- */
+function issues(){
+  const L = [], a = assigned(), n = usedNames().size;
+  if(a < S.total) L.push(`Faltan asignar ${S.total-a} púa${S.total-a>1?'s':''}.`);
+  if(a > S.total) L.push(`Te sobran ${a-S.total} púa${a-S.total>1?'s':''}: sacá algunas o elegí un pack más grande.`);
+  if(n > limit()) L.push(`Usaste ${n} colores y el pack de ${S.total} permite ${limit()}.`);
+  S.groups.forEach((g,k)=>{
+    if(!gQty(g)) return;
+    groupSides(g).forEach(sd=>{ const f=g.faces[sd]; if(f.type==='name' && !f.text.trim()) L.push(`Grupo ${k+1}: falta el nombre a grabar.`) });
+  });
+  return L;
+}
+
+/* =====================================================================
+   RENDER DEL CONFIGURADOR
+   ===================================================================== */
+function faceOpts(g, side){
+  const f = g.faces[side];
+  return {eng: g.eng==='none' ? 'none' : f.type, text:f.text, font:f.font, grip:f.grip, fileUrl:f.file,
+          engColor:ENG_COLORS[g.engColor], finish:g.finish};
+}
+
+function renderGroups(){
+  const lim = limit(), used = usedNames();
+  $('#groups').innerHTML = S.groups.map((g,k)=>{
+    const on = g.id===S.active, pal = THICK[g.thick].colors;
+    const first = Object.keys(g.counts)[0];
+    const icon = first!==undefined ? pal[first] : ['', '#e9eef2', .3];
+    let html = `<div class="group ${on?'on':''}" data-g="${g.id}">
+      <div class="g-head" data-act="open">
+        <svg viewBox="0 0 100 120">${pickSVG(g.shape, icon[1], icon[2], {...faceOpts(g,'front'), fileUrl:g.faces.front.file})}</svg>
+        <div><div class="t"><em>Grupo ${k+1}</em>${esc(groupTitle(g))}</div>
+          <div class="s">${esc(groupColorsTxt(g))} · ${esc(groupEngTxt(g))} · ${g.finish.toLowerCase()}</div></div>
+        <div class="acts">${on?'':'<button data-act="open">Editar</button>'}${S.groups.length>1?'<button data-act="del">Quitar</button>':''}</div>
+      </div>`;
+    if(on){
+      const s = SHAPES[g.shape];
+      html += `<div class="g-body">
+        <div class="sub-h">Modelo</div>
+        <div class="opts c5">${Object.entries(SHAPES).map(([v,x])=>`<button class="opt ${g.shape===v?'on':''}" data-act="shape" data-v="${v}"><svg viewBox="0 0 100 120">${pickSVG(v,'#e9eef2',.4)}</svg>${x.name}</button>`).join('')}</div>
+
+        <div class="sub-h">Espesor</div>
+        <div class="opts c3">${Object.entries(THICK).map(([v,t])=>`<button class="opt ${g.thick===v?'on':''}" data-act="thick" data-v="${v}"><span class="big">${t.label}</span><small ${onReq(g,v)?'class="req"':''}>${onReq(g,v)?'A pedido':t.colors.length+' colores'}</small></button>`).join('')}</div>
+
+        <div class="sub-h">Colores y cantidad <span>${gQty(g)} púa${gQty(g)===1?'':'s'} en este grupo · quedan ${Math.max(0,remaining())}</span></div>
+        <div class="colors">${pal.map((c,i)=>{
+          const n = g.counts[i]||0, isUsed = used.has(c[0]);
+          const blocked = !n && !isUsed && used.size>=lim;
+          return `<div class="color ${n?'on':''} ${!n&&isUsed?'used':''} ${blocked?'blocked':''}">
+            <button class="sw-btn" data-act="inc" data-v="${i}" title="Sumar una ${esc(c[0])}"><i class="${c[2]<.8?'tr':''}" style="background:${c[1]}">${n?`<span class="badge">${n}</span>`:''}</i></button>
+            ${esc(c[0])}
+            ${n?`<div class="stepper"><button data-act="dec" data-v="${i}" aria-label="Restar">−</button><button data-act="inc" data-v="${i}" aria-label="Sumar">+</button></div>`:''}
+          </div>`}).join('')}</div>
+        <div class="legend"><span>Tocá un color para sumar una púa.</span><span><i style="border:1px solid var(--gold)"></i>ya usado en tu pack</span></div>
+
+        <div class="sub-h">Grabado</div>
+        <div class="opts c3">${Object.entries(ENG).map(([v,l])=>`<button class="opt ${g.eng===v?'on':''}" data-act="eng" data-v="${v}">${l}<small>${{none:'Púa lisa',simple:'Un lado',double:'Ambos lados'}[v]}</small></button>`).join('')}</div>
+        ${groupSides(g).map(side=>faceHTML(g, side)).join('')}
+
+        ${g.eng!=='none' ? `<div class="sub-h">Color del grabado <span>${ENG_COLORS[g.engColor][0]}</span></div>
+        <div class="colors engcolors">${ENG_COLORS.map(([n,h,m],i)=>`<div class="color ${i===g.engColor?'on':''}"><button class="sw-btn" data-act="engc" data-v="${i}"><i class="${m?'metal':''}" style="background:${h||'repeating-linear-gradient(45deg,#3a3a40 0 4px,#222226 4px 8px)'}"></i></button>${n}</div>`).join('')}</div>` : ''}
+
+        <div class="sub-h">Terminación</div>
+        <div class="opts c3">${Object.entries(FINISH).map(([v,d])=>`<button class="opt ${g.finish===v?'on':''}" data-act="finish" data-v="${v}">${v}<small>${d}</small></button>`).join('')}</div>
+      </div>`;
+    }
+    return html + '</div>';
+  }).join('');
+  const rem = remaining();
+  $('#addGroup').disabled = rem<=0;
+  $('#addGroup').textContent = rem>0 ? `+ Agregar otro grupo (quedan ${rem})` : 'Pack completo';
+}
+function faceHTML(g, side){
+  const f = g.faces[side];
+  return `<div class="face" data-side="${side}">
+    <h5>${g.eng==='simple' ? 'Qué grabamos' : side==='front' ? 'Lado A · Frente' : 'Lado B · Dorso'}</h5>
+    <div class="opts c3">${Object.entries(FACE_TYPES).map(([k,l])=>`<button class="opt ${f.type===k?'on':''}" data-act="ftype" data-v="${k}">${l}</button>`).join('')}</div>
+    <div class="sub">
+    ${f.type==='logo' ? `<label class="drop">${f.fileName ? '✓ '+esc(f.fileName)+' · tocá para cambiar' : 'Subí tu logo (PNG, PDF, SVG o EPS) · opcional, también podés mandarlo por chat'}<input type="file" data-act="file" accept=".png,.jpg,.jpeg,.svg,.pdf,.eps,image/*" hidden></label>` : ''}
+    ${f.type==='name' ? `<div class="row2"><label class="f">Texto<input type="text" data-act="text" maxlength="16" value="${esc(f.text)}" placeholder="Tu nombre"></label>
+       <label class="f">Tipografía<select data-act="font">${FONTS.map(([v,l])=>`<option value="${v}" ${f.font===v?'selected':''}>${l}</option>`).join('')}</select></label></div>` : ''}
+    ${f.type==='grip' ? `<div class="opts c3">${Object.entries(GRIPS).map(([k,l])=>`<button class="opt ${f.grip===k?'on':''}" data-act="grip" data-v="${k}">${l}</button>`).join('')}</div>` : ''}
+    </div></div>`;
 }
 
 function renderPreview(){
-  if(state.eng!=='double') state.side='front';
-  $('#sideToggle').hidden = state.eng!=='double';
-  document.querySelectorAll('#sideToggle button').forEach(b=>b.classList.toggle('on',b.dataset.side===state.side));
-  const dist = colorDist(), o = faceOpts(state.side), n = dist.length;
+  const g = activeGroup();
+  if(!g){ $('#preview').innerHTML=''; return; }
+  if(g.eng!=='double') S.side = 'front';
+  $('#sideToggle').hidden = g.eng!=='double';
+  document.querySelectorAll('#sideToggle button').forEach(b=>b.classList.toggle('on', b.dataset.side===S.side));
+  $('#stageLabel').textContent = `Grupo ${S.groups.indexOf(g)+1}`;
+  const pal = THICK[g.thick].colors, o = faceOpts(g, S.side);
+  let list = Object.entries(g.counts).map(([i,n])=>[pal[i],n]);
+  const empty = !list.length;
+  if(empty) list = [[['Elegí un color','#e9eef2',.25],0]];
+  const shown = list.slice(0,3), n = shown.length;
   const layout = n===1 ? [[0,0]] : n===2 ? [[-10,-12],[12,14]] : [[0,0],[-16,-24],[16,24]];
-  // dibujar de atrás hacia adelante: el primer color queda adelante
-  const order = dist.map((d,i)=>[d,layout[i]]).reverse();
+  const order = shown.map((d,i)=>[d,layout[i]]).reverse();
   $('#preview').innerHTML = order.map(([[c],[ang,dx]])=>
-    `<g transform="translate(${dx} 0) rotate(${ang} 50 112)">${pickSVG(state.shape,c[1],c[2],o)}</g>`).join('');
-  $('#dist').innerHTML = dist.map(([c,q])=>`<span><i style="background:${c[1]}"></i>${q} × ${c[0]}</span>`).join('');
+    `<g transform="translate(${dx} 0) rotate(${ang} 50 112)">${pickSVG(g.shape,c[1],c[2],o)}</g>`).join('');
+  $('#dist').innerHTML = empty ? '<span style="padding-left:10px">Tocá un color para sumar púas a este grupo</span>'
+    : list.map(([c,q])=>`<span><i style="background:${c[1]}"></i>${q} × ${esc(c[0])}</span>`).join('');
+}
+
+function renderPack(){
+  const picks = [];
+  S.groups.forEach(g=>Object.entries(g.counts).forEach(([i,n])=>{ for(let k=0;k<n;k++) picks.push([g,+i]) }));
+  const slots = Math.max(S.total, picks.length);
+  $('#strip').className = 'strip ' + (S.total===4?'n4':S.total===8?'n8':'');
+  let html = '';
+  for(let k=0;k<slots;k++){
+    const p = picks[k];
+    if(!p){ html += `<div class="slot empty">+</div>`; continue; }
+    const [g,i] = p, c = THICK[g.thick].colors[i];
+    html += `<button class="slot ${g.id===S.active?'active':''} ${k>=S.total?'over':''}" data-g="${g.id}" title="Grupo ${S.groups.indexOf(g)+1}: ${esc(c[0])}">
+      <svg viewBox="0 0 100 120">${pickSVG(g.shape,c[1],c[2],faceOpts(g,'front'))}</svg><small>${S.groups.indexOf(g)+1}</small></button>`;
+  }
+  $('#strip').innerHTML = html;
+  $('#strip').querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{ S.active=+b.dataset.g; render(); });
+
+  const a = assigned(), n = usedNames().size, lim = limit();
+  $('#packTxt').textContent = `${S.total} púas · ${S.groups.filter(g=>gQty(g)).length} grupo${S.groups.filter(g=>gQty(g)).length===1?'':'s'}`;
+  $('#mQty').textContent = `${a} de ${S.total}`; $('#mQty').className = a>S.total?'bad':'';
+  $('#mQtyBar').style.width = Math.min(100, a/S.total*100)+'%';
+  $('#mCol').textContent = `${n} de ${lim}`; $('#mCol').className = n>lim?'bad':'';
+  $('#mColBar').style.width = Math.min(100, n/lim*100)+'%';
+  $('#navCount').textContent = `${a}/${S.total}`;
 }
 
 function renderSummary(){
-  const s = SHAPES[state.shape], t = THICK[state.thick];
-  $('#sumTitle').textContent = `${state.qty} × ${s.name} ${t.label}`;
-  $('#sumSub').textContent = colorDist().map(([c,q])=>`${q} ${c[0]}`).join(' · ');
+  const L = issues(), a = assigned();
+  $('#sumTitle').textContent = `Pack de ${S.total} púas`;
+  $('#sumSub').textContent = S.groups.filter(g=>gQty(g)).map(groupTitle).join(' + ') || 'Todavía no agregaste púas';
+  $('#issues').innerHTML = L.map(x=>`<div>• ${esc(x)}</div>`).join('');
+  $('#sendBtn').disabled = L.length>0;
+  const li = logoInfo();
+  $('#fee').textContent = li.count
+    ? `Logos: ${li.count} (incluye ${li.included}).` + (li.extra ? ` Adicional por única vez: ${money(li.extra*LOGO_EXTRA)} (${li.extra} × ${money(LOGO_EXTRA)}). Si ya grabaste estos logos antes, no se cobra.` : '')
+    : '';
 }
 
 function render(){
-  const t = THICK[state.thick], s = SHAPES[state.shape], lim = colorLimit(state.qty);
-  if(state.colors.length > lim) state.colors = state.colors.slice(0, lim);
-
-  opts('#optQty', QTY.map(q=>[q,q]), v=>+v===state.qty, v=>state.qty=+v,
-    v=>`<span class="big">${v}</span><small>${colorLimit(+v)===1?'1 color':'hasta '+colorLimit(+v)+' colores'}</small>`);
-  opts('#optShape', Object.entries(SHAPES).map(([k,s])=>[k,s.name]), v=>v===state.shape, setShape,
-    (v,l)=>`<svg viewBox="0 0 100 120">${pickSVG(v,'#e9eef2',.4)}</svg>${l}`);
-  opts('#optThick', Object.entries(THICK).map(([k,t])=>[k,t.label]), v=>v===state.thick, v=>{state.thick=v;state.colors=[0]},
-    (v,l)=>`<span class="big">${l}</span><small ${onReq(v)?'class="req"':''}>${onReq(v)?'A pedido':THICK[v].colors.length+' colores'}</small>`);
-  opts('#optEng', Object.entries(ENG), v=>v===state.eng, v=>{state.eng=v; if(v!=='double') state.side='front'},
-    (v,l)=>`${l}<small>${{none:'Púa lisa',simple:'Un lado',double:'Ambos lados'}[v]}</small>`);
-  opts('#optFinish', Object.entries(FINISH).map(([k])=>[k,k]), v=>v===state.finish, v=>state.finish=v,
-    (v,l)=>`${l}<small>${FINISH[v]}</small>`);
-
-  $('#limitTxt').textContent = lim===1 ? 'Con 4 púas elegís 1 color' : `Con ${state.qty} púas podés elegir hasta ${lim} colores (${state.colors.length}/${lim})`;
-  $('#optColor').innerHTML = t.colors.map((c,i)=>{
-    const pos = state.colors.indexOf(i);
-    return `<button class="color ${pos>-1?'on':''}" data-i="${i}"><i class="${c[2]<.8?'tr':''}" style="background:${c[1]}">${pos>-1&&lim>1?`<span class="badge">${pos+1}</span>`:''}</i>${c[0]}</button>`}).join('');
-  $('#optColor').querySelectorAll('.color').forEach(b=>b.onclick=()=>{
-    const i = +b.dataset.i, pos = state.colors.indexOf(i);
-    if(pos>-1){ if(state.colors.length>1) state.colors.splice(pos,1); }
-    else if(lim===1) state.colors=[i];
-    else if(state.colors.length<lim) state.colors.push(i);
-    else { state.colors[lim-1]=i; toast(`Máximo ${lim} colores para ${state.qty} púas`); }
-    render();
-  });
-
-  $('#stepEngColor').style.display = state.eng==='none' ? 'none' : '';
-  $('#optEngColor').innerHTML = ENG_COLORS.map(([n,h,m],i)=>`<button class="color ${i===state.engColor?'on':''}" data-i="${i}"><i class="${m?'metal':''}" style="background:${h||'repeating-linear-gradient(45deg,#3a3a40 0 4px,#222226 4px 8px)'}"></i>${n}</button>`).join('');
-  $('#optEngColor').querySelectorAll('.color').forEach(b=>b.onclick=()=>{state.engColor=+b.dataset.i;render()});
-
-  renderFaces(); renderPreview(); renderSummary();
-
-  const engTxt = state.eng==='none' ? 'Sin grabado' : ENG[state.eng];
-  $('#sShape').textContent = $('#vShape').textContent = s.name;
-  $('#sThick').textContent = t.label + (onReq(state.thick)?' (a pedido)':'');
-  $('#vThick').textContent = t.label;
-  $('#sQty').textContent = $('#vQty').textContent = state.qty + ' púas';
-  $('#vColor').textContent = state.colors.length + (state.colors.length>1?' colores':' color');
-  $('#sEng').textContent = $('#vEng').textContent = engTxt;
-  $('#sEngColor').textContent = $('#vEngColor').textContent = state.eng==='none' ? '—' : ENG_COLORS[state.engColor][0];
-  $('#sFinish').textContent = $('#vFinish').textContent = state.finish;
+  if(!activeGroup() && S.groups.length) S.active = S.groups[0].id;
+  document.querySelectorAll('#optTotal .opt').forEach(b=>b.classList.toggle('on', +b.dataset.v===S.total));
+  $('#vTotal').textContent = S.total + ' púas';
+  $('#limitNote').textContent = `Con ${S.total} púas podés usar hasta ${limit()} colores distintos en total (sumando todos los espesores).`;
+  $('#vGroups').textContent = `${S.groups.length} grupo${S.groups.length>1?'s':''}`;
+  renderGroups(); renderPreview(); renderPack(); renderSummary(); save();
 }
-document.querySelectorAll('#sideToggle button').forEach(b=>b.onclick=()=>{state.side=b.dataset.side;renderPreview()});
+// actualizaciones livianas mientras se escribe (sin re-dibujar inputs)
+function softRender(){ renderPreview(); renderPack(); renderSummary(); save();
+  const g = activeGroup(); const el = document.querySelector(`.group[data-g="${g.id}"] .g-head svg`);
+  const pal = THICK[g.thick].colors, first = Object.keys(g.counts)[0], c = first!==undefined ? pal[first] : ['','#e9eef2',.3];
+  if(el) el.innerHTML = pickSVG(g.shape, c[1], c[2], faceOpts(g,'front'));
+}
 
-/* ====== PEDIDO ====== */
-function saveCart(){ try{localStorage.setItem('arkam-cart', JSON.stringify(cart))}catch(e){} drawCart(); }
-$('#addBtn').onclick = ()=>{
-  const sides = state.eng==='none' ? [] : state.eng==='simple' ? ['front'] : ['front','back'];
-  for(const sd of sides){
-    const f = state.faces[sd];
-    if(f.type==='name' && !f.text.trim()){ toast('Escribí el nombre a grabar'); return; }
+/* ---------- eventos ---------- */
+$('#optTotal').innerHTML = TOTALS.map(t=>`<button class="opt" data-v="${t}"><span class="big">${t}</span><small>hasta ${COLOR_LIMIT[t]} colores</small></button>`).join('');
+$('#optTotal').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+  S.total = +b.dataset.v;
+  if(assigned()>S.total) toast(`Tenés ${assigned()} púas asignadas: sacá ${assigned()-S.total} para completar el pack de ${S.total}`);
+  render();
+});
+$('#addGroup').onclick = ()=>{ addGroup(); render(); };
+document.querySelectorAll('#sideToggle button').forEach(b=>b.onclick=()=>{S.side=b.dataset.side;renderPreview()});
+
+$('#groups').addEventListener('click', e=>{
+  const el = e.target.closest('[data-act]'); if(!el || el.tagName==='INPUT' || el.tagName==='SELECT') return;
+  const gEl = el.closest('.group'), g = S.groups.find(x=>x.id===+gEl.dataset.g);
+  const face = el.closest('.face'), side = face && face.dataset.side, v = el.dataset.v;
+  switch(el.dataset.act){
+    case 'open': if(e.target.closest('[data-act="del"]')) return; if(S.active!==g.id){ S.active=g.id; S.side='front'; } break;
+    case 'del': S.groups = S.groups.filter(x=>x!==g); if(S.active===g.id) S.active = S.groups[0].id; break;
+    case 'shape': setShape(g, v); break;
+    case 'thick': setThick(g, v); break;
+    case 'inc': inc(g, +v); break;
+    case 'dec': dec(g, +v); break;
+    case 'eng': g.eng = v; break;
+    case 'engc': g.engColor = +v; break;
+    case 'finish': g.finish = v; break;
+    case 'ftype': g.faces[side].type = v; S.side = side; break;
+    case 'grip': g.faces[side].grip = v; S.side = side; break;
+    default: return;
   }
-  const c0 = THICK[state.thick].colors[state.colors[0]];
-  cart.push({
-    qty:state.qty, shape:state.shape, thick:state.thick, onReq:onReq(state.thick),
-    colors: colorDist().map(([c,q])=>[c[0],q]), hex:c0[1], op:c0[2],
-    eng:state.eng, faces: sides.map(sd=>faceDesc(state.faces[sd])),
-    logos: sides.filter(sd=>state.faces[sd].type==='logo').length,
-    engColor: state.eng==='none' ? '' : ENG_COLORS[state.engColor][0],
-    finish:state.finish, notes:$('#notes').value.trim()
-  });
-  $('#notes').value='';
-  saveCart(); toast('Pack agregado al pedido');
-};
-function itemLines(it){
-  const L = [];
-  L.push(`Colores: ${it.colors.map(([n,q])=>`${q} ${n}`).join(', ')}`);
-  if(it.eng==='none') L.push('Sin grabado');
-  else {
-    L.push(`Grabado ${ENG[it.eng].toLowerCase()}: ${it.faces.map((f,i)=>it.faces.length>1?(i?'lado B ':'lado A ')+f:f).join(' / ')}`);
-    L.push(`Color del grabado: ${it.engColor}`);
+  render();
+});
+$('#groups').addEventListener('input', e=>{
+  if(e.target.dataset.act!=='text') return;
+  const g = S.groups.find(x=>x.id===+e.target.closest('.group').dataset.g), side = e.target.closest('.face').dataset.side;
+  g.faces[side].text = e.target.value; S.side = side; softRender();
+});
+$('#groups').addEventListener('change', e=>{
+  const act = e.target.dataset.act; if(act!=='font' && act!=='file') return;
+  const g = S.groups.find(x=>x.id===+e.target.closest('.group').dataset.g), side = e.target.closest('.face').dataset.side, f = g.faces[side];
+  S.side = side;
+  if(act==='font') f.font = e.target.value;
+  if(act==='file'){
+    const x = e.target.files[0]; if(!x) return;
+    f.file = /\.(png|jpe?g|svg|gif|webp)$/i.test(x.name) ? URL.createObjectURL(x) : null;
+    f.fileName = x.name;
   }
-  L.push(`Terminación: ${it.finish}`);
-  if(it.notes) L.push(`Obs: ${it.notes}`);
-  return L;
-}
-function drawCart(){
-  $('#cartCount').textContent = cart.length;
-  $('#items').innerHTML = cart.length ? cart.map((it,i)=>`
-    <div class="item">
-      <svg viewBox="0 0 100 120">${pickSVG(it.shape,it.hex,it.op,{eng:'none',finish:it.finish})}</svg>
-      <div><h6>${it.qty} × ${SHAPES[it.shape].name} · ${THICK[it.thick].label}${it.onReq?' (a pedido)':''}</h6>
-      <p>${itemLines(it).map(esc).join('<br>')}</p><button class="rm" data-i="${i}">Quitar</button></div>
-    </div>`).join('') : '<div class="empty">Todavía no agregaste packs.</div>';
-  $('#items').querySelectorAll('.rm').forEach(b=>b.onclick=()=>{cart.splice(+b.dataset.i,1);saveCart()});
-}
+  render();
+});
+
+/* ---------- envío ---------- */
 $('#sendBtn').onclick = ()=>{
-  if(!cart.length){ toast('Tu pedido está vacío'); return; }
+  const L = issues(); if(L.length){ toast(L[0]); return; }
   const name = $('#custName').value.trim();
   if(!name){ toast('Escribí tu nombre o usuario de Instagram'); $('#custName').focus(); return; }
-  const total = cart.reduce((a,b)=>a+b.qty,0);
-  const logos = cart.reduce((a,b)=>a+b.logos,0);
-  const blocks = cart.map((it,i)=>`${i+1}) ${it.qty} × ${SHAPES[it.shape].name} ${THICK[it.thick].label}${it.onReq?' (a pedido)':''}\n   - ${itemLines(it).join('\n   - ')}`);
-  const msg = `¡Hola ARKAM! Quiero hacer este pedido:\n\nNombre / IG: ${name}\nTotal: ${total} púas\n\n${blocks.join('\n\n')}`
-    + (logos ? `\n\nTe adjunto ${logos===1?'el archivo del logo':'los archivos de los logos'} por acá.` : '');
+  const groups = S.groups.filter(g=>gQty(g));
+  const blocks = groups.map((g,k)=>{
+    const L = [`Colores: ${groupColorsTxt(g)}`];
+    if(g.eng==='none') L.push('Sin grabado');
+    else {
+      const sides = groupSides(g);
+      L.push(`Grabado ${ENG[g.eng].toLowerCase()}: ` + sides.map((sd,i)=>(sides.length>1?(i?'lado B ':'lado A '):'')+faceDesc(g.faces[sd])).join(' / '));
+      L.push(`Color del grabado: ${ENG_COLORS[g.engColor][0]}`);
+    }
+    L.push(`Terminación: ${g.finish}`);
+    return `${k+1}) ${groupTitle(g)}\n   - ${L.join('\n   - ')}`;
+  });
+  const li = logoInfo(), notes = $('#notes').value.trim();
+  let msg = `¡Hola ARKAM! Quiero hacer este pedido:\n\nNombre / IG: ${name}\nPack de ${S.total} púas · ${usedNames().size} colores\n\n${blocks.join('\n\n')}`;
+  if(notes) msg += `\n\nObservaciones: ${notes}`;
+  if(li.count) msg += `\n\nLogos: ${li.count} (incluye ${li.included})` + (li.extra ? ` · ${li.extra} adicional${li.extra>1?'es':''}` : '') + `. Te adjunto ${li.count===1?'el archivo':'los archivos'} por acá.`;
   $('#msg').value = msg;
   $('#modal').classList.add('show');
 };
@@ -780,14 +938,28 @@ $('#copyBtn').onclick = async ()=>{
 };
 $('#closeModal').onclick = ()=>$('#modal').classList.remove('show');
 $('#modal').onclick = e=>{ if(e.target.id==='modal') $('#modal').classList.remove('show') };
-const openCart = ()=>document.body.classList.add('cart-open');
-const closeCart = ()=>document.body.classList.remove('cart-open');
-$('#openCart').onclick = openCart; $('#closeCart').onclick = closeCart; $('#scrim').onclick = closeCart;
-let tt; function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2200)}
+let tt; function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2600)}
 
-// descartar pedidos guardados con un formato anterior
-cart = cart.filter(it=>Array.isArray(it.colors) && SHAPES[it.shape] && THICK[it.thick]);
-render(); drawCart();
+/* ---------- borrador guardado en el navegador ---------- */
+function save(){
+  try{
+    localStorage.setItem('arkam-pack', JSON.stringify({total:S.total, active:S.active, groups:S.groups.map(g=>({...g,
+      faces:{front:{...g.faces.front,file:null}, back:{...g.faces.back,file:null}}}))}));
+  }catch(e){}
+}
+function load(){
+  try{
+    const d = JSON.parse(localStorage.getItem('arkam-pack')||'null');
+    if(!d || !TOTALS.includes(d.total) || !Array.isArray(d.groups) || !d.groups.length) return false;
+    if(!d.groups.every(g=>SHAPES[g.shape] && THICK[g.thick] && g.counts && g.faces)) return false;
+    S.total = d.total; S.groups = d.groups; S.active = d.active;
+    gid = Math.max(...d.groups.map(g=>g.id));
+    return true;
+  }catch(e){ return false; }
+}
+
+if(!load()) addGroup();
+render();
 </script>
 </body>
 </html>
